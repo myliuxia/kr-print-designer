@@ -1,6 +1,5 @@
 const generate = require('nanoid/generate')
-import { getDefaultProps } from '../libs/props.js'
-
+import { getDefaultProps, styleMap } from '../libs/props.js'
 export default {
   // 初始化页面属性
   initPage(state, pageInfo) {
@@ -8,11 +7,30 @@ export default {
   },
   // 初始化可选对象
   initOptionItems(state, options) {
-    state.optionItems = options ? options : []
+    // 补全默认属性
+    let defaultOptionItem = getDefaultProps()
+    let optionsObject = options ? options.map(item => {
+      let optionItem = { ...defaultOptionItem, ...item }
+      optionItem.style = styleMap[item.type] || {}
+      return optionItem
+    }) : []
+
+    state.optionItems = optionsObject
+
   },
   // 初始化模板对象
   initTempItems(state, temp) {
-    state.tempItems = temp ? temp : []
+    // 补全默认样式
+    let defaultOptionItem = getDefaultProps()
+    let tempItems = temp ? temp.map(item => {
+      let optionItem = { ...defaultOptionItem, ...item }
+      let defaultStyle = styleMap[item.type] || {}
+      optionItem.style = { ...defaultStyle, ...optionItem.style }
+      return optionItem
+    }) : []
+
+    state.tempItems = tempItems
+
   },
   // 初始化选中对象
   initActive(state) {

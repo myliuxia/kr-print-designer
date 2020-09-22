@@ -27,7 +27,7 @@ export const data = {
   width: 770,
 }
 export const tmpJson = []
-export const attrJson = [
+export const attrJson = () => [
   {
       "type":"braid-txt",
       "isEidt":1,

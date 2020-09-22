@@ -1,0 +1,13 @@
+.widgets {
+  outline: none;
+  font-size: 12px;
+  &:hover {
+    outline: 1px solid #ddd !important;
+  }
+  &.active {
+    outline: 1px solid #2196f3 !important;
+    &:hover {
+      outline: 1px solid #2196f3 !important;
+    }
+  }
+}

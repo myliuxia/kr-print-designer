@@ -16,10 +16,35 @@
 <script>
 import Viewport from './components/viewport'
 import Panel from './components/panel'
+import vptd from './mixins/vptd'
+import widgets from './components/widgets'
+import Vue from 'vue'
+import { attrJson } from './libs/data.js'
 
 export default {
+  mixins: [vptd],
   name: 'App',
-  components: { Viewport ,Panel }
+  components: { Viewport ,Panel },
+  created() {
+    // 模板页面信息
+    let pageInfo = {
+      title: 'demo',
+      width: 750,
+      height: 550,
+      pageWidth: 750 ,
+      pageHeight: 550,
+      imageUrl: ''
+    }
+    // 模板设计选项
+    let options = attrJson()
+    // 模板内容
+    let tempItems =  []
+    
+    this.$vptd.dispatch('designerInit',{ pageInfo, options, tempItems } )
+
+    // 注册
+    Vue.use(widgets)
+  },
 }
 </script>
 

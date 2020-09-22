@@ -24,7 +24,6 @@
 //   name: ''
 // }
 const WIDGET_NAME = 'braid-image'
-import { getFullImageUrl } from '@/libs/util'
 import { create } from 'domain'
 import { watch } from 'fs'
 export default {
@@ -34,12 +33,12 @@ export default {
   ],
   data() {
     return {
-      imageUrl: getFullImageUrl(this.val.value)
+      imageUrl: this.val.value
     }
   },
   watch: {
     val(newVal) {
-      this.imageUrl = getFullImageUrl(newVal.value)
+      this.imageUrl = newVal.value
     }
   }
 }
