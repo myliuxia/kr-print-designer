@@ -1,5 +1,5 @@
 {
-  "name": "kr-page-designer",
+  "name": "kr-print-designer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "element-ui": "2.13.0",
+    "nanoid": "^1.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.0",

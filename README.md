@@ -1,4 +1,4 @@
-# kr-page-designer
+# kr-print-designer
 
 ## Project setup
 ```
