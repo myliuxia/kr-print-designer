@@ -27,12 +27,12 @@ export default {
     },
     activeElement() {
       return this.$vptd.state.activeElement
-    }
+    },
   },
   methods: {
     activeLayer(e, item) {
       this.$vptd.commit('select', {
-        uuid: item.uuid
+        uuid: item.uuid,
       })
       let viewport = document.querySelector('#viewport')
       let target = viewport.querySelector(`[data-uuid='${item.uuid}']`)
@@ -44,8 +44,8 @@ export default {
     // 删除元件
     dele(e, item) {
       this.$vptd.commit('delete', item.uuid)
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>

@@ -37,7 +37,7 @@ import vptd from '../../mixins/vptd'
 
 export default {
   components: {
-    control // 尺寸控制
+    control, // 尺寸控制
   },
 
   mixins: [move, vptd],
@@ -63,7 +63,7 @@ export default {
     // 选中项id
     widgetId() {
       return this.$vptd.state.uuid
-    }
+    },
   },
 
   mounted() {
@@ -73,7 +73,7 @@ export default {
     // 绑定键盘上下左右键用于元件的移动
     document.addEventListener(
       'keydown',
-      e => {
+      (e) => {
         e.stopPropagation()
         var target = this.$vptd.state.activeElement
         // 左
@@ -112,7 +112,7 @@ export default {
         var uuid = target.getAttribute('data-uuid')
         // 设置选中元素
         this.$vptd.commit('select', {
-          uuid: uuid || -1
+          uuid: uuid || -1,
         })
         // 绑定移动事件：除背景图以外的元件才能移动
         target = this.$vptd.state.activeElement
@@ -122,7 +122,7 @@ export default {
       } else {
         // 取消选中元素
         this.$vptd.commit('select', {
-          uuid: -1
+          uuid: -1,
         })
       }
     },
@@ -140,8 +140,8 @@ export default {
       } else {
         return this.selectTarget(target.parentNode)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -149,7 +149,6 @@ export default {
 .holder {
   display: flex;
   justify-content: center;
-  height: 100%;
   overflow: auto;
   font-size: 0;
   border: 1px solid #f5f5f5;

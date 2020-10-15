@@ -20,23 +20,33 @@
 </template>
 
 <script>
-// let itemAttr = {
-//   type: 'braid-txt',
-//   isEidt: 0,
-//   title: '收货人手机',
-//   value: '{收货人手机}',
-//   defaultValue: '18982068702',
-//   name: 'buyerPhone'
-// }
-
 import vptd from '../../../mixins/vptd'
 const WIDGET_NAME = 'braid-html'
 
 export default {
   mixins: [vptd],
   name: WIDGET_NAME,
+  setting: {
+    type: WIDGET_NAME,
+    isEidt: true,
+    isUpload: false,
+    dragable: true, // 是否可拖拽
+    resizable: true, // 尺寸是否可变
+    width: 120,
+    height: 40,
+    left: 50,
+    top: 0,
+    title: 'html',
+    value: '<div>html<div>',
+    defaultValue: '<div>html<div>',
+    name: '',
+    style: {
+      zIndex: 0,
+      ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
+    },
+  },
   props: [
-    'val' // 文本对象
+    'val', // 文本对象
   ],
   methods: {
     updateText(e, uuid) {
@@ -44,10 +54,10 @@ export default {
       this.$vptd.commit('updateData', {
         uuid: uuid,
         key: 'value',
-        value: text
+        value: text,
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

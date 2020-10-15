@@ -60,7 +60,7 @@ export default {
   mixins: [vptd],
   data() {
     return {
-      type: '' // 调整方向 left | right | up | down
+      type: '', // 调整方向 left | right | up | down
     }
   },
   computed: {
@@ -71,7 +71,7 @@ export default {
       let target = this.$vptd.state.activeElement
       if (!target.resizable) return ''
       return target
-    }
+    },
   },
 
   methods: {
@@ -83,7 +83,7 @@ export default {
         startX: e.pageX,
         startY: e.pageY,
         originX: this.elm[originX],
-        originY: this.elm[originY]
+        originY: this.elm[originY],
       })
 
       document.addEventListener('mousemove', this.handlemousemove, true)
@@ -97,7 +97,7 @@ export default {
       this.$vptd.commit('resize', {
         x: e.pageX,
         y: e.pageY,
-        type: this.type
+        type: this.type,
       })
     },
 
@@ -105,8 +105,8 @@ export default {
       document.removeEventListener('mousemove', this.handlemousemove, true)
       document.removeEventListener('mouseup', this.handlemouseup, true)
       this.$vptd.commit('stopmove')
-    }
-  }
+    },
+  },
 }
 </script>
 

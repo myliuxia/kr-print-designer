@@ -1,5 +1,8 @@
 <template>
   <div class="options-box">
+    <template v-for="(item,index) in defaultOptions">
+      <el-button size="mini" :key="index" @click="(e) => {addTempItem(e,item)}">{{ item.title }}</el-button>
+    </template>
     <template v-for="item in optionItems">
       <el-popover v-if="item.type == 'braid-table'" :key="item.title" placement="top" width="200">
         <div>
@@ -25,6 +28,7 @@
 </template>
 
 <script>
+//
 import vptd from '../../mixins/vptd'
 import { cumulativeOffset, checkInView } from '../../utils/offset'
 import { getDefaultProps } from '../../libs/props'
@@ -32,12 +36,32 @@ import { getDefaultProps } from '../../libs/props'
 export default {
   mixins: [vptd],
   data() {
-    return {}
+    return {
+      defaultOptions: [
+        {
+          type: 'braid-txt',
+          isEidt: 1,
+          title: '自定义文本',
+          value: '自定义文本',
+          defaultValue: '自定义文本',
+          name: '',
+        },
+        {
+          type: 'braid-image',
+          isEidt: 1,
+          isUpload: 1,
+          title: '图片',
+          value: ' ',
+          defaultValue: ' ',
+          name: '',
+        },
+      ],
+    }
   },
   computed: {
     optionItems() {
       return this.$vptd.state.optionItems
-    }
+    },
   },
   methods: {
     // 添加组件
@@ -45,7 +69,7 @@ export default {
       switch (item.type) {
         case 'braid-table': {
           let selectCol = []
-          item.columns.forEach(col => {
+          item.columns.forEach((col) => {
             for (let colAttr of item.columnsAttr) {
               if (colAttr.name == col) {
                 selectCol.push(colAttr)
@@ -60,8 +84,8 @@ export default {
         default:
           this.$vptd.dispatch('addTempItem', item)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

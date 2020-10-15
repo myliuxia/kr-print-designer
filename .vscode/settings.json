@@ -1,0 +1,28 @@
+/**
+项目统一格式化，禁止使用prettier，beautify格式化代码
+*/
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.format.enable": false,
+  "eslint.options": {
+    "configFile": "./.eslintrc.js"
+  },
+  "vetur.format.options.tabSize": 2,
+  "vetur.format.options.useTabs": false,
+  // ----1使用prettie格式化工具----
+  "vetur.format.defaultFormatter.html": "prettyhtml",
+  "vetur.format.defaultFormatter.js": "prettier",
+  "vetur.format.defaultFormatterOptions": {
+    "prettier": {
+      "printWidth": 120,
+      "singleQuote": true,
+      "semi": false,
+      //将>多行JSX元素放在最后一行的末尾，而不是单独放在下一行
+      "jsxBracketSameLine": false
+    }
+  }
+}

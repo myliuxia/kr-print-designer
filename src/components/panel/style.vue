@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 公共属性 -->
-    <el-form label-width="80px" :model="activeElement" size="mini">
+    <el-form label-width="80px" :model="activeElement" size="mini" class="kr-form">
       <el-row>
         <el-col :span="12">
           <el-form-item label="宽度">
@@ -9,7 +9,7 @@
               v-model="activeElement.width"
               controls-position="right"
               :min="1"
-              class="w-110"
+              class="min-input"
             ></el-input-number>
           </el-form-item>
         </el-col>
@@ -19,7 +19,7 @@
               v-model="activeElement.height"
               controls-position="right"
               :min="1"
-              class="w-110"
+              class="min-input"
             ></el-input-number>
           </el-form-item>
         </el-col>
@@ -31,7 +31,7 @@
               v-model="activeElement.left"
               controls-position="right"
               :min="0"
-              class="w-110"
+              class="min-input"
             ></el-input-number>
           </el-form-item>
         </el-col>
@@ -41,7 +41,7 @@
               v-model="activeElement.top"
               controls-position="right"
               :min="0"
-              class="w-110"
+              class="min-input"
             ></el-input-number>
           </el-form-item>
         </el-col>
@@ -55,7 +55,7 @@
               v-model="activeElement.style.FontSize"
               controls-position="right"
               :min="0"
-              class="w-110"
+              class="min-input"
             ></el-input-number>
           </el-form-item>
         </el-col>
@@ -116,6 +116,7 @@
             <el-select
               :disabled="activeElement.style.codeType===undefined"
               v-model="activeElement.style.codeType"
+              class="min-input"
             >
               <el-option v-for="val in codeTypeArray" :key="val" :label="val" :value="val" />
             </el-select>
@@ -126,6 +127,7 @@
             <el-select
               :disabled="activeElement.style.ItemType===undefined"
               v-model="activeElement.style.ItemType"
+              class="min-input"
             >
               <el-option
                 v-for="val in itemTypeArray"
@@ -150,7 +152,7 @@ export default {
   data() {
     return {
       codeTypeArray: getCodeTypeArray(),
-      itemTypeArray: getItemTypeArray()
+      itemTypeArray: getItemTypeArray(),
     }
   },
   computed: {

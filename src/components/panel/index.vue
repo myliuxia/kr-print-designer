@@ -1,29 +1,29 @@
 <template>
-  <div class="mini-collapse">
+  <div class="kr-collapse">
     <el-collapse v-model="activeNames">
       <el-collapse-item title name="1">
         <template slot="title">
-          <span class="pd-l-10">页面参数</span>
+          <span>页面参数</span>
         </template>
-        <page class="pd-l-10" />
+        <page />
       </el-collapse-item>
       <el-collapse-item name="2">
         <template slot="title">
-          <span class="pd-l-10">样式</span>
+          <span>样式</span>
         </template>
         <appearance class="pd-l-10" />
       </el-collapse-item>
       <el-collapse-item name="3">
         <template slot="title">
-          <span class="pd-l-10">组件</span>
+          <span>组件</span>
         </template>
-        <options class="pd-l-10" />
+        <options />
       </el-collapse-item>
       <el-collapse-item name="4">
         <template slot="title">
-          <span class="pd-l-10">已加组件</span>
+          <span>已加组件</span>
         </template>
-        <layers class="pd-l-10" />
+        <layers />
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -50,11 +50,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-.mini-collapse {
-  color: #555555;
-  ::v-deep.el-collapse-item__content {
-    padding-bottom: 10px;
-  }
-}
-</style>

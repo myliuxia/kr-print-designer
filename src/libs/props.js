@@ -37,7 +37,8 @@ export const styleMap = {
     Alignment: 1, // 对齐方式 1--左靠齐 2--居中 3--右靠齐
     FontSize: 9,
     FontColor: '#000000',
-    BorderColor: '#000000'
+    BorderColor: '#000000',
+    // ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
   },
   'braid-html': {
     zIndex: 0,

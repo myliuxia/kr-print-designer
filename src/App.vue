@@ -1,14 +1,13 @@
 <template>
-  <div id="app">
-    <viewport style="flex:1" />
-    <div class="tool-bar">
-      <el-scrollbar flex-box="1" class="full">
+  <div class="kr-designer">
+    <viewport class="kr-designer-view" />
+    <div class="kr-designer-tool">
+      <el-scrollbar class="kr-designer-tool_con">
         <panel class="control-panel" />
       </el-scrollbar>
-      <!-- <div>
-        <el-button size="mini" type="primary" @click="savePreview">保存并预览</el-button>
-        <el-button size="mini" type="primary" @click="save">保存</el-button>
-      </div> -->
+      <div class="kr-designer-tool_bar">
+        <el-button size="mini" type="primary" @click="saveTemp">保存</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -31,7 +30,7 @@ export default {
       title: 'demo',
       width: 750,
       height: 550,
-      pageWidth: 750 ,
+      pageWidth: 750,
       pageHeight: 550,
       imageUrl: ''
     }
@@ -45,6 +44,16 @@ export default {
     // 注册
     Vue.use(widgets)
   },
+  methods:{
+    saveTemp(){
+      let tempItems = this.$vptd.state.tempItems
+      let page = this.$vptd.state.page
+
+      console.log(page)
+      console.log(tempItems)
+
+    }
+  }
 }
 </script>
 
@@ -53,8 +62,9 @@ body,html{
   padding: 0;
   margin: 0;
   height: 100%;
+  box-sizing: border-box;
 }
-#app {
+.kr-designer{
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -63,12 +73,60 @@ body,html{
   height: 100%;
   display: flex;
   flex-direction: row;
+ .kr-designer-view{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .kr-designer-tool{
+    width: 400px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .el-scrollbar__wrap{
+      overflow: auto;
+    }
+    &_con{
+      flex: 1;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    &_bar{
+      padding: 10px;
+      text-align: center;
+    }
+  }
 }
-.tool-bar{
-  width: 400px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 
+
+.kr-form {
+  .el-form-item--mini.el-form-item {
+    margin-bottom: 10px;
+  }
+  .min-input{
+    width: 100px;
+  }
+  .unit-text{
+    font-size: 12px;
+    color: #999999;
+    margin-left: 5px;
+  }
 }
+
+.kr-collapse {
+  color: #555555;
+  width: 400px;
+
+  .el-collapse-item__header {
+    box-sizing: border-box;
+    padding-left: 10px;
+  }
+
+  .el-collapse-item__content {
+    box-sizing: border-box;
+    padding: 10px;
+  }
+}
+
 </style>

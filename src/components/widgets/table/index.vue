@@ -138,6 +138,28 @@ const WIDGET_NAME = 'braid-table'
 export default {
   mixins: [vptd],
   name: WIDGET_NAME,
+  setting: {
+    type: WIDGET_NAME,
+    isEidt: true,
+    isUpload: false,
+    dragable: true, // 是否可拖拽
+    resizable: true, // 尺寸是否可变
+    width: 240,
+    height: 60,
+    left: 50,
+    top: 10,
+    title: '表格',
+    value: [],
+    defaultValue: [],
+    name: '',
+    style: {
+      zIndex: 0,
+      Alignment: 1, // 对齐方式 1--左靠齐 2--居中 3--右靠齐
+      FontSize: 9,
+      FontColor: '#000000',
+      BorderColor: '#000000',
+    },
+  },
   props: [
     'val', // 文本对象
   ],
