@@ -15,6 +15,16 @@ const install = function (Vue) {
   Vue.component(html.name, html)
 }
 
+const getWidgetsSetting = function () {
+  return {
+    [braidTxt.name]: braidTxt.setting,
+    [barCode.name]: barCode.setting,
+    [table.name]: table.setting,
+    [image.name]: image.setting,
+    [html.name]: html.setting,
+  }
+}
 export default {
-  install
+  install,
+  getWidgetsSetting
 }

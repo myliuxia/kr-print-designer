@@ -1,7 +1,6 @@
 
 import { getDefaultProps } from '../libs/props.js'
 export default {
-  top: 0, // 添加元件的初始纵坐标
   zoom: 100, // 画布缩放百分比
   type: 'page', // 选中元素类型
   index: -1, // 选中元素索引
@@ -22,5 +21,7 @@ export default {
 
   //模板参数
   tempId: '', // 模板Id
-  loading: false // 是否正在初始化中
+  loading: false, // 是否正在初始化中
+
+  widgetSetting: {}, // 模板组件默认属性
 }

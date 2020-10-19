@@ -1,6 +1,3 @@
-
-import { getFullImageUrl } from '@/libs/util'
-
 /**
  * 通过模板和模板数据生成打印内容
  * @param temp 打印模板
@@ -121,7 +118,7 @@ export const tableTempTohtml = (columns, data, style) => {
  */
 export const imageTempTohtml = (value) => {
 
-  let html = '<img style=\'width:100%\' src=\'' + getFullImageUrl(value) + '\'/>'
+  let html = '<img style=\'width:100%\' src=\'' + value + '\'/>'
 
   return html
 }

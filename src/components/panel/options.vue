@@ -1,8 +1,5 @@
 <template>
   <div class="options-box">
-    <template v-for="(item,index) in defaultOptions">
-      <el-button size="mini" :key="index" @click="(e) => {addTempItem(e,item)}">{{ item.title }}</el-button>
-    </template>
     <template v-for="item in optionItems">
       <el-popover v-if="item.type == 'braid-table'" :key="item.title" placement="top" width="200">
         <div>
@@ -36,27 +33,7 @@ import { getDefaultProps } from '../../libs/props'
 export default {
   mixins: [vptd],
   data() {
-    return {
-      defaultOptions: [
-        {
-          type: 'braid-txt',
-          isEidt: 1,
-          title: '自定义文本',
-          value: '自定义文本',
-          defaultValue: '自定义文本',
-          name: '',
-        },
-        {
-          type: 'braid-image',
-          isEidt: 1,
-          isUpload: 1,
-          title: '图片',
-          value: ' ',
-          defaultValue: ' ',
-          name: '',
-        },
-      ],
-    }
+    return {}
   },
   computed: {
     optionItems() {

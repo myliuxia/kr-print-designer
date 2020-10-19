@@ -23,15 +23,6 @@
 </template>
 
 <script>
-// let itemAttr = {
-//   type: 'bar-code',
-//   isEidt: 0,
-//   title: '订单编号',
-//   value: '{orderCode}',
-//   defaultValue: '1234567890',
-//   name: 'orderCode'
-// }
-
 const WIDGET_NAME = 'bar-code'
 export default {
   name: WIDGET_NAME,

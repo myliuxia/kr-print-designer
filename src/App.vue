@@ -7,6 +7,7 @@
       </el-scrollbar>
       <div class="kr-designer-tool_bar">
         <el-button size="mini" type="primary" @click="saveTemp">保存</el-button>
+        <el-button size="mini" type="primary" @click="previewTemp">保存</el-button>
       </div>
     </div>
   </div>
@@ -16,15 +17,18 @@
 import Viewport from './components/viewport'
 import Panel from './components/panel'
 import vptd from './mixins/vptd'
-import widgets from './components/widgets'
 import Vue from 'vue'
 import { attrJson } from './libs/data.js'
+import widgets from './components/widgets'
+
+import { LodopPreview } from './libs/lodop/index.js'
 
 export default {
   mixins: [vptd],
   name: 'App',
-  components: { Viewport ,Panel },
+  components: { Viewport, Panel },
   created() {
+    Vue.use(widgets)
     // 模板页面信息
     let pageInfo = {
       title: 'demo',
@@ -32,39 +36,47 @@ export default {
       height: 550,
       pageWidth: 750,
       pageHeight: 550,
-      imageUrl: ''
+      imageUrl: '',
     }
     // 模板设计选项
     let options = attrJson()
     // 模板内容
-    let tempItems =  []
-    
-    this.$vptd.dispatch('designerInit',{ pageInfo, options, tempItems } )
+    let tempItems = []
 
-    // 注册
-    Vue.use(widgets)
+    // 设置模板组件默认属性
+    this.$vptd.commit('setWidgetSetting', widgets.getWidgetsSetting())
+
+    // 初始化设计器
+    this.$vptd.dispatch('designerInit', { pageInfo, options, tempItems })
   },
-  methods:{
-    saveTemp(){
+  methods: {
+    // 保存模板
+    saveTemp() {
       let tempItems = this.$vptd.state.tempItems
       let page = this.$vptd.state.page
-
-      console.log(page)
+      this.$emit('save', { pageInfo: page, tempItems: tempItems })
       console.log(tempItems)
-
-    }
-  }
+      console.log(page)
+    },
+    // 预览模板
+    previewTemp() {
+      let tempItems = [...this.$vptd.state.tempItems]
+      let page = { ...this.$vptd.state.page }
+      LodopPreview(page.width, page.height, page.pageWidth, page.pageHeight, page.title, tempItems, page.imageUrl)
+    },
+  },
 }
 </script>
 
 <style lang="scss">
-body,html{
+body,
+html {
   padding: 0;
   margin: 0;
   height: 100%;
   box-sizing: border-box;
 }
-.kr-designer{
+.kr-designer {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -73,41 +85,40 @@ body,html{
   height: 100%;
   display: flex;
   flex-direction: row;
- .kr-designer-view{
+  .kr-designer-view {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
-  .kr-designer-tool{
+  .kr-designer-tool {
     width: 400px;
     height: 100%;
     display: flex;
     flex-direction: column;
-    .el-scrollbar__wrap{
+    .el-scrollbar__wrap {
       overflow: auto;
     }
-    &_con{
+    &_con {
       flex: 1;
       height: 100%;
       width: 100%;
       overflow: hidden;
     }
-    &_bar{
+    &_bar {
       padding: 10px;
       text-align: center;
     }
   }
 }
 
-
 .kr-form {
   .el-form-item--mini.el-form-item {
     margin-bottom: 10px;
   }
-  .min-input{
+  .min-input {
     width: 100px;
   }
-  .unit-text{
+  .unit-text {
     font-size: 12px;
     color: #999999;
     margin-left: 5px;
@@ -128,5 +139,4 @@ body,html{
     padding: 10px;
   }
 }
-
 </style>

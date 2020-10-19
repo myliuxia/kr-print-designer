@@ -158,6 +158,8 @@ export default {
       FontSize: 9,
       FontColor: '#000000',
       BorderColor: '#000000',
+      AutoHeight: 0, // 高度自动（模板在该元素位置以下的元素都关联打印）
+      BottomMargin: 0, // 距离下边距
     },
   },
   props: [

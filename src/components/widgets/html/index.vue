@@ -43,6 +43,8 @@ export default {
     style: {
       zIndex: 0,
       ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
+      AutoHeight: 0, // 高度自动（模板在该元素位置以下的元素都关联打印）
+      BottomMargin: 0, // 距离下边距
     },
   },
   props: [

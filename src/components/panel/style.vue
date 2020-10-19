@@ -123,7 +123,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="条码类型">
+          <el-form-item label="打印类型">
             <el-select
               :disabled="activeElement.style.ItemType===undefined"
               v-model="activeElement.style.ItemType"
@@ -136,6 +136,27 @@
                 :value="val.value"
               />
             </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="高度自动">
+            <el-switch
+              :disabled="activeElement.style.AutoHeight===undefined"
+              v-model="activeElement.style.AutoHeight"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="下边距">
+            <el-input-number
+              :disabled="activeElement.style.BottomMargin===undefined || !activeElement.style.AutoHeight"
+              v-model="activeElement.style.BottomMargin"
+              controls-position="right"
+              :min="0"
+              class="min-input"
+            ></el-input-number>
           </el-form-item>
         </el-col>
       </el-row>

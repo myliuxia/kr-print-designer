@@ -8,24 +8,20 @@ export default {
   // 初始化可选对象
   initOptionItems(state, options) {
     // 补全默认属性
-    let defaultOptionItem = getDefaultProps()
     let optionsObject = options ? options.map(item => {
-      let optionItem = { ...defaultOptionItem, ...item }
-      optionItem.style = styleMap[item.type] || {}
+      let optionItem = { ...state.widgetSetting[item.type], ...item, style: { ...state.widgetSetting[item.type].style, ...(item.style || {}) } }
       return optionItem
     }) : []
 
     state.optionItems = optionsObject
 
   },
+
   // 初始化模板对象
   initTempItems(state, temp) {
     // 补全默认样式
-    let defaultOptionItem = getDefaultProps()
     let tempItems = temp ? temp.map(item => {
-      let optionItem = { ...defaultOptionItem, ...item }
-      let defaultStyle = styleMap[item.type] || {}
-      optionItem.style = { ...defaultStyle, ...optionItem.style }
+      let optionItem = { ...state.widgetSetting[item.type], ...item, style: { ...state.widgetSetting[item.type].style, ...(item.style || {}) } }
       return optionItem
     }) : []
 
@@ -141,7 +137,7 @@ export default {
 
   // 添加组件
   addTempItem(state, { data: data = null, item }) {
-    let def = { top: state.top, uuid: generate('1234567890abcdef', 10) }
+    let def = { uuid: generate('1234567890abcdef', 10) }
     let setting = JSON.parse(JSON.stringify(item))
 
     if (data) {
@@ -183,8 +179,13 @@ export default {
   setTempId(state, id) {
     state.tempId = id
   },
+
   setLoading(state, flag) {
     state.loading = flag
   },
+  // 设置模板默认属性
+  setWidgetSetting(state, settingObj) {
+    state.widgetSetting = settingObj
+  }
 
 }

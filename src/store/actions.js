@@ -10,7 +10,8 @@ export default {
       uuid: state.tempItems[state.tempItems.length - 1].uuid
     })
   },
-  // 获得模板详情
+
+  // 初始化模板设计器
   async designerInit({ state, commit, store }, tempInfo) {
 
     commit('initOptionItems', tempInfo.options)

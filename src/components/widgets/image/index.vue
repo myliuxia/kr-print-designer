@@ -10,19 +10,11 @@
       zIndex: val.zIndex
     }"
   >
-    <img class="braid-image" :src="imageUrl" />
+    <img class="braid-image" :title="val.title" :src="val.value" />
   </div>
 </template>
 
 <script>
-// let itemAttr = {
-//   type: 'braid-image',
-//   isEidt: 0,
-//   title: '水洗标样式1',
-//   value: '/group1/M00/00/07/wKgH1l4ESr-AS1ooAAB8D-KqTTA670.png',
-//   defaultValue: '/group1/M00/00/07/wKgH1l4ESr-AS1ooAAB8D-KqTTA670.png',
-//   name: ''
-// }
 const WIDGET_NAME = 'braid-image'
 import { create } from 'domain'
 import { watch } from 'fs'
@@ -51,9 +43,12 @@ export default {
     'val', // 图片对象
   ],
   data() {
-    return {
-      imageUrl: this.val.value,
-    }
+    return {}
+  },
+  computed: {
+    imageUrl() {
+      return this.val.value
+    },
   },
   watch: {
     val(newVal) {
