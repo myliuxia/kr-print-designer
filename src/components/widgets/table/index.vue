@@ -144,6 +144,7 @@ export default {
     isUpload: false,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
+    dynamic: false, // 是否为动态内容
     width: 240,
     height: 60,
     left: 50,

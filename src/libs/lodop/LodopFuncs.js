@@ -1,4 +1,4 @@
-﻿import { MessageBox, Message } from 'element-ui'
+﻿import { MessageBox } from 'element-ui'
 //==本JS是加载Lodop插件及CLodop服务的综合示例，可直接使用，建议看懂后融进自己页面程序==
 var CreatedOKLodopObject, CLodopIsLocal, CLodopJsState
 //==判断是否需要CLodop(那些不支持插件的浏览器):==

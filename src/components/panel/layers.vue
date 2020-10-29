@@ -19,7 +19,9 @@ import { cumulativeOffset, checkInView } from '../../utils/offset'
 export default {
   mixins: [vptd],
   data() {
-    return {}
+    return {
+      sysLayer: [{}],
+    }
   },
   computed: {
     layers() {

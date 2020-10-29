@@ -10,14 +10,12 @@
       zIndex: val.zIndex
     }"
   >
-    <img class="braid-image" :title="val.title" :src="val.value" />
+    <img class="braid-image" :title="val.title" :src="val.defaultValue" />
   </div>
 </template>
 
 <script>
 const WIDGET_NAME = 'braid-image'
-import { create } from 'domain'
-import { watch } from 'fs'
 export default {
   name: WIDGET_NAME,
   setting: {
@@ -27,6 +25,7 @@ export default {
     isUpload: true,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
+    dynamic: true, // 是否为动态内容
     width: 120,
     height: 40,
     left: 50,
@@ -64,6 +63,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   user-select: none;
   -webkit-user-drag: none;
   pointer-events: none;

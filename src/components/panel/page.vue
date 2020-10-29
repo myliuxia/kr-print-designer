@@ -56,7 +56,6 @@
 
 <script>
 import vptd from '../../mixins/vptd'
-// import svc from '@/service'
 export default {
   mixins: [vptd],
   computed: {

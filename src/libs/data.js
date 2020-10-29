@@ -45,8 +45,8 @@ export const attrJson = () => [
   {
     "type": "braid-html",
     "title": "html",
-    "value": [],
-    "defaultValue": [],
+    "value": '',
+    "defaultValue": '',
     "name": ""
   },
   {

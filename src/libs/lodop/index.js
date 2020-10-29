@@ -172,10 +172,11 @@ function AddPrintContent(LODOP, printContent, index = 0) {
   // 记录自适应高度（style.AutoHeight == 0 ）的打印项序号
   let tableIndex = 1 + index * printContent.length
 
+  // 自适应高度（style.AutoHeight == 0 ）的打印项
+  let tableObject = flagIdx == -1 ? null : printContent[flagIdx]
+
   // 先打印 自适应高度（style.AutoHeight == 0 ）的打印项
   if (flagIdx != -1) {
-    // 自适应高度（style.AutoHeight == 0 ）的打印项
-    let tableObject = flagIdx == -1 ? null : printContent[flagIdx]
 
     // 如果包含表格则涉及表格分页问题，在处理分页时要区分表格自动分页和NewPage强制分页也，故将表格做为第一隔打印项并记录其序号
     if (tableObject.type == 'braid-table') {

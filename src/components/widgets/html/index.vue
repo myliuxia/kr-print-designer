@@ -13,8 +13,6 @@
       zIndex: val.style.zIndex,
       fontSize: val.style.FontSize + 'pt',
       color: val.style.FontColor,
-      textAlign: val.style.Alignment==1?'left':val.style.Alignment==2?'center':'right',
-      fontWeight: val.style.Bold ? 'bold': 'normal'
     }"
   ></div>
 </template>
@@ -28,10 +26,11 @@ export default {
   name: WIDGET_NAME,
   setting: {
     type: WIDGET_NAME,
-    isEidt: true,
+    isEidt: false,
     isUpload: false,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
+    dynamic: false, // 是否为动态内容
     width: 120,
     height: 40,
     left: 50,

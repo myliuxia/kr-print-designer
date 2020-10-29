@@ -6,8 +6,8 @@
         <panel class="control-panel" />
       </el-scrollbar>
       <div class="kr-designer-tool_bar">
-        <el-button size="mini" type="primary" @click="saveTemp">保存</el-button>
-        <el-button size="mini" type="primary" @click="previewTemp">保存</el-button>
+        <el-button size="mini" type="success" @click="saveTemp">保存</el-button>
+        <el-button size="mini" type="primary" @click="previewTemp">预览</el-button>
       </div>
     </div>
   </div>
@@ -25,8 +25,21 @@ import { LodopPreview } from './libs/lodop/index.js'
 
 export default {
   mixins: [vptd],
-  name: 'App',
+  name: 'kr-print-designer',
   components: { Viewport, Panel },
+  props: {
+    widgetOptions: {
+      type: Array,
+      default: () => [
+        { type: 'braid-txt', title: '静态文本', value: '静态文本', defaultValue: '静态文本' },
+        { type: 'braid-txt', title: '动态文本', value: '', defaultValue: '动态文本', dynamic: true },
+      ],
+    },
+    tempValue: {
+      type: Object,
+      default: () => ({ title: 'demo', width: 750, height: 550, pageWidth: 750, pageHeight: 550, tempItems: [] }),
+    },
+  },
   created() {
     Vue.use(widgets)
     // 模板页面信息
@@ -38,6 +51,7 @@ export default {
       pageHeight: 550,
       imageUrl: '',
     }
+
     // 模板设计选项
     let options = attrJson()
     // 模板内容
@@ -45,9 +59,8 @@ export default {
 
     // 设置模板组件默认属性
     this.$vptd.commit('setWidgetSetting', widgets.getWidgetsSetting())
-
     // 初始化设计器
-    this.$vptd.dispatch('designerInit', { pageInfo, options, tempItems })
+    this.$vptd.dispatch('designerInit', { tempValue: this.tempValue, options: this.widgetOptions })
   },
   methods: {
     // 保存模板
@@ -55,8 +68,8 @@ export default {
       let tempItems = this.$vptd.state.tempItems
       let page = this.$vptd.state.page
       this.$emit('save', { pageInfo: page, tempItems: tempItems })
-      console.log(tempItems)
-      console.log(page)
+      // console.log(tempItems)
+      // console.log(page)
     },
     // 预览模板
     previewTemp() {

@@ -32,7 +32,7 @@
 <script>
 import page from './page.vue'
 import style from './style.vue'
-import options from './options.vue'
+import options from './options'
 import layers from './layers.vue'
 
 export default {
