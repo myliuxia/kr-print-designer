@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Viewport from './components/viewport'
-import Panel from './components/panel'
+import Viewport from './components/viewport/index.vue'
+import Panel from './components/panel/index.vue'
 import vptd from './mixins/vptd'
 import Vue from 'vue'
 import { attrJson } from './libs/data.js'
