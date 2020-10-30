@@ -7,16 +7,14 @@
   "keyword": "lodop print-designer",
   "author": "liuxia",
   "scripts": {
-    "dev": "webpack-dev-server --hot --inline --config ./example/webpack.config.js",
-    "serve": "vue-cli-service serve example/index.js",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lib": "vue-cli-service build --target lib --name kr-print-designer --dest lib src/index.js"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11",
     "element-ui": "2.13.0",
-    "nanoid": "^1.0.1"
+    "nanoid": "^1.0.1",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",

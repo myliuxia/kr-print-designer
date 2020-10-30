@@ -4,7 +4,6 @@ import vuePrintDesigner from '../src'
 
 Vue.use(vuePrintDesigner)
 
-new Vue({ // eslint-disable-line no-new
-  el: '#app',
+new Vue({
   render: h => h(App)
-})
+}).$mount('#app')
