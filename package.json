@@ -1,14 +1,14 @@
 {
   "name": "kr-print-designer",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "一个基于Vue、ElementUi、Lodop的打印模板设计器。实现打印模板的设计、预览和打印功能.",
-  "private": false,
+  "publish": true,
   "main": "lib/kr-print-designer.umd.min.js",
   "keyword": "lodop print-designer",
   "author": "liuxia",
   "scripts": {
     "dev": "webpack-dev-server --hot --inline --config ./example/webpack.config.js",
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve example/index.js",
     "build": "vue-cli-service build",
     "lib": "vue-cli-service build --target lib --name kr-print-designer --dest lib src/index.js"
   },

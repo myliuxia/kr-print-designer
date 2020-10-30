@@ -96,6 +96,7 @@ html {
   color: #2c3e50;
   width: 100%;
   height: 100%;
+  text-align: left;
   display: flex;
   flex-direction: row;
   .kr-designer-view {
