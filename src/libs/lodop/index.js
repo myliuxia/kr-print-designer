@@ -1,102 +1,75 @@
 import getLodop from './LodopFuncs'
+import cloneDeep from 'lodash/cloneDeep'
 import { tableTempTohtml, imageTempTohtml, strTempToValue, htmlTempTohtml } from './tools'
 
+export default { print, preview, previewTemp }
 /**
- * LODOP 预览
- * @param width 可视区域宽度
- * @param height 可视区域高度
- * @param pageWidth 纸张宽度
- * @param pageHeight 纸张高度
- * @param pageName 纸张名称
- * @param printContent 打印内容
- * @param backImg 背景图片
+ * 打印功能
+ * @param {*Object} temp 打印模板
+ * @param {*Array} data 打印数据
  */
-export const LodopPreview = (width, height, pageWidth, pageHeight, pageName, printContent, backImg) => {
-  // 默认上边距和左边距为0
-  let LODOP = CreatePrintTemp(pageName, width, height, pageWidth, pageHeight)
-  AddPrintContent(LODOP, printContent)
-  if (backImg) {
-    if (!/^http(s?):\/\//.test(backImg)) {
-      backImg = process.env.VUE_APP_UPLOAD_API_URL + backImg
-    }
-    LODOP.ADD_PRINT_SETUP_BKIMG('<img border=\'0\' src=\'' + backImg + '\'>')
-    LODOP.SET_SHOW_MODE('BKIMG_IN_PREVIEW', 1)
-    LODOP.SET_SHOW_MODE('BKIMG_PRINT', 0)
+function print(temp, data) {
+  let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
+  let printContent = data.length > 0 ? _TempParser(temp.tempItems, data) : [cloneDeep(temp.tempItems)]
+  if (data.printContent > 1) {
+    // 打印多份
+    printContent.forEach((aPrint, index) => {
+      LODOP.NewPageA()
+      aPrint.forEach(printItem => {
+        _AddPrintItem(LODOP, printItem, index)
+      })
+    })
+  } else {
+    // 单份
+    printContent[0].forEach(printItem => {
+      _AddPrintItem(LODOP, printItem)
+    })
   }
+
+  let flag = LODOP.PRINT()
+  return flag
+}
+
+/**
+ * 打印预览功能
+ * @param {*Object} temp 打印模板
+ * @param {*Array} data 打印数据
+ */
+function preview(temp, data) {
+  let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
+  let printContent = data.length > 0 ? _TempParser(temp.tempItems, data) : [cloneDeep(temp.tempItems)]
+  if (data.printContent > 1) {
+    // 打印多份
+    printContent.forEach((aPrint, index) => {
+      LODOP.NewPageA()
+      aPrint.forEach(printItem => {
+        _AddPrintItem(LODOP, printItem, index)
+      })
+    })
+  } else {
+    // 单份
+    printContent[0].forEach(printItem => {
+      _AddPrintItem(LODOP, printItem)
+    })
+  }
+
   let flag = LODOP.PREVIEW()
   return flag
 }
 
 /**
- * LODOP 预览多分打印内容
- * @param width 可视区域宽度
- * @param height 可视区域高度
- * @param pageWidth 纸张宽度
- * @param pageHeight 纸张高度
- * @param pageName 纸张名称
- * @param printContentArr 打印内容-数组
- * @param backImg 背景图片
+ * 模板预览功能
+ * @param {*Object} temp 打印模板
  */
-export const LodopPreviewMore = (width, height, pageWidth, pageHeight, pageName, printContentArr, backImg) => {
-  // 默认上边距和左边距为0
-  let LODOP = CreatePrintTemp(pageName, width, height, pageWidth, pageHeight)
-  printContentArr.forEach((printItem, index) => {
-    LODOP.NewPageA()
-    AddPrintContent(LODOP, printItem, index)
-    if (backImg) {
-      if (!/^http(s?):\/\//.test(backImg)) {
-        backImg = process.env.VUE_APP_UPLOAD_API_URL + backImg
-      }
-      LODOP.ADD_PRINT_SETUP_BKIMG('<img border=\'0\' src=\'' + backImg + '\'>')
-      LODOP.SET_SHOW_MODE('BKIMG_IN_PREVIEW', 1)
-      LODOP.SET_SHOW_MODE('BKIMG_PRINT', 0)
-    }
+function previewTemp(temp) {
+  let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
+  let printContent = cloneDeep(temp.tempItems)
+  printContent.forEach(printItem => {
+    _AddPrintItem(LODOP, printItem)
   })
   let flag = LODOP.PREVIEW()
   return flag
 }
-
-
-/**
- * LODOP 打印
- * @param width 可视区域宽度
- * @param height 可视区域高度
- * @param pageWidth 纸张宽度
- * @param pageHeight 纸张高度
- * @param pageName 纸张名称
- * @param printContent 打印内容
- */
-export const LodopPrint = (width, height, pageWidth, pageHeight, pageName, printContent) => {
-  // 默认上边距和左边距为0
-  let LODOP = CreatePrintTemp(pageName, width, height, pageWidth, pageHeight)
-  AddPrintContent(LODOP, printContent)
-  let flag = LODOP.PRINT()
-  return flag
-}
-
-/**
- * LODOP 批量打印多分
- * @param width 可视区域宽度
- * @param height 可视区域高度
- * @param pageWidth 纸张宽度
- * @param pageHeight 纸张高度
- * @param pageName 纸张名称
- * @param printContent 打印内容
- * @param number 打印份数
- */
-export const LodopBatchPrint = (width, height, pageWidth, pageHeight, pageName, printContent, number) => {
-  // 默认上边距和左边距为0
-  let LODOP = CreatePrintTemp(pageName, width, height, pageWidth, pageHeight)
-  let num = 1
-  while (num <= number) {
-    LODOP.NEWPAGEA()
-    AddPrintContent(LODOP, printContent, num)
-    num++
-  }
-  let flag = LODOP.PRINT()
-  return flag
-}
-
 
 
 /**
@@ -109,8 +82,7 @@ export const LodopBatchPrint = (width, height, pageWidth, pageHeight, pageName, 
  * @param top 可视区域上边距(单位px)
  * @param left 可视区域左边距(单位px)
  */
-
-function CreatePrintTemp(pageName, width, height, pageWidth = 0, pageHeight = 0, top = 0, left = 0) {
+function _CreateLodop(pageName, width, height, pageWidth = 0, pageHeight = 0, top = 0, left = 0) {
   let LODOP = getLodop()
   // 设置软件产品注册信息
   // LODOP.SET_LICENSES('成都九洲电子信息系统股份有限公司', '1DAA3FA17DD9EF73566A29AC39CE300C', '成都九洲電子信息系統股份有限公司', 'F0F8A487D1A0DEBA028F42800034942A')
@@ -122,179 +94,144 @@ function CreatePrintTemp(pageName, width, height, pageWidth = 0, pageHeight = 0,
 }
 
 /**
- * 直接打印内容
- * @param {*Object} printTemp 打印模板
+ * 解析模板和数据生成打印项
+ * @param {*Array} tempItem 模板打赢项
  * @param {*Array} data 打印数据
  */
-export const LodopPreviewA = (printTemp, data) => {
-  let pageInfo = printTemp.page // 页面信息
-  let tempItems = printTemp.tempItems // 模板打印项
-  // 默认上边距和左边距为0
-  let LODOP = CreatePrintTemp(pageInfo.pageName, pageInfo.width, pageInfo.height, pageInfo.pageWidth, pageInfo.pageHeight)
-
-  // 解析数据并生成打印内容
-  let printContentArr = data.map(item => {
-    let printContent = tempItems.map(tempItem => {
-      tempItem.value = tempItem.name ? strTempToValue(tempItem.value, item[tempItem.name] || '') : tempItem.value
-      return tempItem
-    })
-    return printContent
-  })
-
-  printContentArr.forEach((printItem, index) => {
-    LODOP.NewPageA()
-    AddPrintContent(LODOP, printItem, index)
-    if (backImg) {
-      if (!/^http(s?):\/\//.test(backImg)) {
-        backImg = process.env.VUE_APP_UPLOAD_API_URL + backImg
+function _TempParser(tempItem, data) {
+  let temp = cloneDeep(tempItem)
+  //修改模板答应项顺序
+  //将自适应高度的打印项（item.style.AutoHeight == 1）放在第一项
+  let flag = temp.findIdex(item => item.style.AutoHeight == 1)
+  if (flag != -1) {
+    let autoItem = temp[flag]
+    temp.splice(flag, 1)
+    temp.unShift(autoItem)
+    // 处理位于自适应打印项下方的打印项
+    temp.forEach(item => {
+      // 位于自适应大项下的打印项修改top、left,并添加关联属性（style.LinkedItem）
+      if (item.top > autoItem.top && item.style.ItemType == 0) {
+        item.top = item.top - autoItem.top - autoItem.height
+        item.left = item.left - autoItem.left
+        item.style.LinkedItem = 1
       }
-      LODOP.ADD_PRINT_SETUP_BKIMG('<img border=\'0\' src=\'' + backImg + '\'>')
-      LODOP.SET_SHOW_MODE('BKIMG_IN_PREVIEW', 1)
-      LODOP.SET_SHOW_MODE('BKIMG_PRINT', 0)
-    }
-  })
-  let flag = LODOP.PREVIEW()
-  return flag
+    })
+  }
 
+  // 解析打印模板和数据，生成生成打印内容
+  let tempContent = []
+  data.forEach(dataItem => {
+    let conItem = temp.map(tempItem => {
+      let item = cloneDeep(tempItem)
+      if (item.name) {
+        item.defaultValue = dataItem[item.name]
+        item.value = strTempToValue(item.value, item.defaultValue || '')
+      }
+      return item
+    })
+    tempContent.push(conItem)
+  })
+
+  return tempContent
 }
 
 
 /**
- * 添加打印内容
+ * 添加打印项
  * @param {lodop} LODOP 打印实例
- * @param {Array} printContent 打印项内容
- * @param {Number} index 当前打印项开始序号
+ * @param {Object} printItem 打印项内容
+ * @param {Number} pageIndex 当前打印页的开始序号
  */
-function AddPrintContent(LODOP, printContent, index = 0) {
-  // 判断打印内容是否包含自适应高度（style.AutoHeight == 0 ）的打印项
-  let flagIdx = printContent.findIndex(item => item.style.AutoHeight == 0)
-
-  // 记录自适应高度（style.AutoHeight == 0 ）的打印项序号
-  let tableIndex = 1 + index * printContent.length
-
-  // 自适应高度（style.AutoHeight == 0 ）的打印项
-  let tableObject = flagIdx == -1 ? null : printContent[flagIdx]
-
-  // 先打印 自适应高度（style.AutoHeight == 0 ）的打印项
-  if (flagIdx != -1) {
-
-    // 如果包含表格则涉及表格分页问题，在处理分页时要区分表格自动分页和NewPage强制分页也，故将表格做为第一隔打印项并记录其序号
-    if (tableObject.type == 'braid-table') {
-      LODOP.ADD_PRINT_TABLE(
-        tableObject.top,
-        tableObject.left,
-        tableObject.width,
-        'BottomMargin:' + tableObject.style.AutoHeight + 'mm',
-        tableTempTohtml(tableObject.columns, tableObject.defaultValue, tableObject.style)
-      )
-    } else if (tableObject.type == 'braid-html') {
-      LODOP.ADD_PRINT_TABLE(
-        tableObject.top,
-        tableObject.left,
-        tableObject.width,
-        'BottomMargin:' + tableObject.style.AutoHeight + 'mm',
-        tableObject.value
-      )
-    }
-    // 设置样式
-    if (tableObject.style) {
-      Object.keys(tableObject.style).forEach(key => {
-        LODOP.SET_PRINT_STYLEA(0, key, tableObject.style[key])
-      })
-    }
-
-    // 删除已打印的打印项内容
-    printContent.splice(flagIdx, 1)
+function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
+  // 批量打印时，修改关联打印项的关联序号
+  if (printItem.style && printItem.style.LinkedItem == 1) {
+    printItem.style.LinkedItem = 1 + pageIndex
   }
-
-
-  printContent.forEach(item => {
-    if (tableObject) {
-      // item.style.LinkedItem = tableIndex
-    }
-    /**
-     * 且打印位置在表格下面、且该项为普通项
-     * 满足条件的打印内容项会关联（LinkedItem）table打印项，此时该打印项的top和left不再是上边距和左边距，而是与关联项的间隔空隙及左边距偏移
-     * 故通过表格的位置信息重新计算打印项的top和left
-     */
-    if (tableObject && item.top > tableObject.top && item.style.ItemType == 0) {
-      item.top = item.top - tableObject.top - tableObject.height
-      item.left = item.left - tableObject.left
-      item.style.LinkedItem = tableIndex
-      // item.style.LinkedItem = tableIndex
-    }
-
-
-    // 添加打印项
-    switch (item.type) {
-      case 'braid-txt':
-        LODOP.ADD_PRINT_TEXT(
-          item.top,
-          item.left,
-          item.width,
-          item.height,
-          item.value
-          // strTempToValue(item.value, item.defaultValue)
-        )
-
-        break
-      case 'bar-code':
-        LODOP.ADD_PRINT_BARCODE(
-          item.top,
-          item.left,
-          item.width,
-          item.height,
-          item.style.codeType,
-          item.value
-          // strTempToValue(item.value, item.defaultValue)
-        )
-        break
-      case 'braid-html':
-        {
-          let html = htmlTempTohtml(item.defaultValue, item.style)
+  // 添加打印项
+  switch (printItem.type) {
+    case 'braid-txt':
+      LODOP.ADD_PRINT_TEXT(
+        printItem.top,
+        printItem.left,
+        printItem.width,
+        printItem.height,
+        printItem.value
+      )
+      break
+    case 'bar-code':
+      LODOP.ADD_PRINT_BARCODE(
+        printItem.top,
+        printItem.left,
+        printItem.width,
+        printItem.height,
+        printItem.style.codeType,
+        printItem.value
+      )
+      break
+    case 'braid-html':
+      {
+        let html = htmlTempTohtml(printItem.defaultValue, printItem.style)
+        if (printItem.style && printItem.style.AutoHeight == 1) {
           LODOP.ADD_PRINT_HTM(
-            item.top,
-            item.left,
-            item.width,
-            item.height,
+            printItem.top,
+            printItem.left,
+            printItem.width,
+            'BottomMargin:' + printItem.style.BottomMargin + 'mm',
             html
           )
+        } else {
+          LODOP.ADD_PRINT_HTM(
+            printItem.top,
+            printItem.left,
+            printItem.width,
+            printItem.height,
+            html
+          )
+
         }
-        break
-      case 'braid-table':
-        {
-          let html = tableTempTohtml(item.columns, item.defaultValue, item.style)
+      }
+      break
+    case 'braid-table':
+      {
+        let html = tableTempTohtml(printItem.columns, printItem.defaultValue, printItem.style)
+        if (printItem.style && printItem.style.AutoHeight == 1) {
           LODOP.ADD_PRINT_TABLE(
-            item.top,
-            item.left,
-            item.width,
-            item.height,
+            printItem.top,
+            printItem.left,
+            printItem.width,
+            'BottomMargin:' + printItem.style.BottomMargin + 'mm',
             html
           )
-        }
-        break
-      case 'braid-image':
-        {
-          let html = imageTempTohtml(item.value)
-          LODOP.ADD_PRINT_IMAGE(
-            item.top,
-            item.left,
-            item.width,
-            item.height,
+        } else {
+          LODOP.ADD_PRINT_TABLE(
+            printItem.top,
+            printItem.left,
+            printItem.width,
+            printItem.height,
             html
           )
-        }
-        break
-      default: ''
-    }
-    // 设置打印项样式
-    if (item.style) {
-      Object.keys(item.style).forEach(key => {
-        LODOP.SET_PRINT_STYLEA(0, key, item.style[key])
-      })
-    }
 
-  })
+        }
+      }
+      break
+    case 'braid-image':
+      {
+        let html = imageTempTohtml(printItem.value)
+        LODOP.ADD_PRINT_IMAGE(
+          printItem.top,
+          printItem.left,
+          printItem.width,
+          printItem.height,
+          html
+        )
+      }
+      break
+    default: ''
+  }
+  // 设置打印项样式
+  if (printItem.style) {
+    Object.keys(printItem.style).forEach(key => {
+      LODOP.SET_PRINT_STYLEA(0, key, printItem.style[key])
+    })
+  }
 }
-
-

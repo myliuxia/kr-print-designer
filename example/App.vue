@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <kr-print-designer :temp-value="value" :widgets="widgets" @save="handleSave" />
+    <kr-print-designer :temp-value="value" :widget-options="widgets" @save="handleSave" />
   </div>
 </template>
 
 <script>
+import { OutStockOptions } from './data/options'
 export default {
   data() {
     return {
@@ -16,12 +17,7 @@ export default {
         pageHeight: 550,
         tempItems: [],
       },
-      widgets: [
-        { type: 'braid-txt', title: '静态文本', value: '静态文本', defaultValue: '静态文本' },
-        { type: 'braid-txt', title: '动态文本', value: '', defaultValue: '动态文本', dynamic: true },
-        { type: 'braid-image', title: '图片', value: '', defaultValue: '' },
-        { type: 'braid-html', title: 'html', value: '<div>html<div>', defaultValue: '<div>html<div>' },
-      ],
+      widgets: OutStockOptions,
       uploadOption: {
         url: 'https://jsonplaceholder.typicode.com/photos',
       },

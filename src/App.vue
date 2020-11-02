@@ -21,8 +21,6 @@ import Vue from 'vue'
 import { attrJson } from './libs/data.js'
 import widgets from './components/widgets'
 
-import { LodopPreview } from './libs/lodop/index.js'
-
 export default {
   mixins: [vptd],
   name: 'kr-print-designer',
@@ -67,7 +65,7 @@ export default {
     saveTemp() {
       let tempItems = this.$vptd.state.tempItems
       let page = this.$vptd.state.page
-      this.$emit('save', { pageInfo: page, tempItems: tempItems })
+      this.$emit('save', { ...page, tempItems: tempItems })
       // console.log(tempItems)
       // console.log(page)
     },
@@ -75,7 +73,8 @@ export default {
     previewTemp() {
       let tempItems = [...this.$vptd.state.tempItems]
       let page = { ...this.$vptd.state.page }
-      LodopPreview(page.width, page.height, page.pageWidth, page.pageHeight, page.title, tempItems, page.imageUrl)
+      console.log(this.$lodop)
+      this.$lodop.previewTemp({ ...page, tempItems: tempItems })
     },
   },
 }
