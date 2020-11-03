@@ -4,6 +4,13 @@ export default {
   // 初始化页面属性
   initPage(state, pageInfo) {
     state.page = pageInfo
+    // 补全默认样式
+    let tempItems = pageInfo.tempItems ? pageInfo.tempItems.map(item => {
+      let optionItem = { ...state.widgetSetting[item.type], ...item, style: { ...state.widgetSetting[item.type].style, ...(item.style || {}) } }
+      return optionItem
+    }) : []
+
+    state.page.tempItems = tempItems
   },
   // 初始化可选对象
   initOptionItems(state, options) {
@@ -17,17 +24,6 @@ export default {
 
   },
 
-  // 初始化模板对象
-  initTempItems(state, temp) {
-    // 补全默认样式
-    let tempItems = temp ? temp.map(item => {
-      let optionItem = { ...state.widgetSetting[item.type], ...item, style: { ...state.widgetSetting[item.type].style, ...(item.style || {}) } }
-      return optionItem
-    }) : []
-
-    state.tempItems = tempItems
-
-  },
   // 初始化选中对象
   initActive(state) {
     state.activeElement = getDefaultProps()
@@ -49,7 +45,7 @@ export default {
       state.activeElement = getDefaultProps()
       state.type = 'page'
     } else {
-      let widget = state.tempItems.find(w => w.uuid === payload.uuid)
+      let widget = state.page.tempItems.find(w => w.uuid === payload.uuid)
       state.activeElement = widget
       state.type = widget.type
     }
@@ -121,13 +117,13 @@ export default {
     var type = state.type
     if (type === 'page') return
     let index = 0
-    state.tempItems.forEach((item, idx) => {
+    state.page.tempItems.forEach((item, idx) => {
       if (item.uuid === uuid) {
         index = idx
       }
     })
     // 删除元件
-    state.tempItems.splice(index, 1)
+    state.page.tempItems.splice(index, 1)
 
     // 重置 activeElement
     state.activeElement = getDefaultProps()
@@ -142,10 +138,10 @@ export default {
 
     if (data) {
       data.forEach(function (val) {
-        state.tempItems.push(Object.assign(setting, val, def))
+        state.page.tempItems.push(Object.assign(setting, val, def))
       })
     } else {
-      state.tempItems.push(Object.assign(setting, def))
+      state.page.tempItems.push(Object.assign(setting, def))
     }
   },
 
@@ -171,7 +167,7 @@ export default {
 
   // 更新数据
   updateData(state, { uuid, key, value }) {
-    let widget = state.tempItems.find(w => w.uuid === uuid)
+    let widget = state.page.tempItems.find(w => w.uuid === uuid)
     widget[key] = value
   },
 

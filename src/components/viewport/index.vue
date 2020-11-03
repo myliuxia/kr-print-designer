@@ -49,7 +49,7 @@ export default {
   computed: {
     // 已添加的组件
     widgetStore() {
-      return this.$vptd.state.tempItems
+      return this.$vptd.state.page.tempItems
     },
     // 背景图地址
     backImg() {

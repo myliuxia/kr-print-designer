@@ -18,8 +18,8 @@ import Viewport from './components/viewport/index.vue'
 import Panel from './components/panel/index.vue'
 import vptd from './mixins/vptd'
 import Vue from 'vue'
-import { attrJson } from './libs/data.js'
 import widgets from './components/widgets'
+import cloneDeep from 'lodash/cloneDeep'
 
 export default {
   mixins: [vptd],
@@ -40,41 +40,25 @@ export default {
   },
   created() {
     Vue.use(widgets)
-    // 模板页面信息
-    let pageInfo = {
-      title: 'demo',
-      width: 750,
-      height: 550,
-      pageWidth: 750,
-      pageHeight: 550,
-      imageUrl: '',
-    }
-
-    // 模板设计选项
-    let options = attrJson()
-    // 模板内容
-    let tempItems = []
 
     // 设置模板组件默认属性
     this.$vptd.commit('setWidgetSetting', widgets.getWidgetsSetting())
     // 初始化设计器
-    this.$vptd.dispatch('designerInit', { tempValue: this.tempValue, options: this.widgetOptions })
+    this.$vptd.dispatch('designerInit', {
+      tempValue: cloneDeep(this.tempValue),
+      options: cloneDeep(this.widgetOptions),
+    })
   },
   methods: {
     // 保存模板
     saveTemp() {
-      let tempItems = this.$vptd.state.tempItems
       let page = this.$vptd.state.page
-      this.$emit('save', { ...page, tempItems: tempItems })
-      // console.log(tempItems)
-      // console.log(page)
+      this.$emit('save', cloneDeep(page))
     },
     // 预览模板
     previewTemp() {
-      let tempItems = [...this.$vptd.state.tempItems]
       let page = { ...this.$vptd.state.page }
-      console.log(this.$lodop)
-      this.$lodop.previewTemp({ ...page, tempItems: tempItems })
+      this.$lodop.previewTemp(cloneDeep(page))
     },
   },
 }

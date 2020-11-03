@@ -24,8 +24,9 @@ export default {
     }
   },
   computed: {
+    // 已添加的组件
     layers() {
-      return this.$vptd.state.tempItems
+      return this.$vptd.state.page.tempItems
     },
     activeElement() {
       return this.$vptd.state.activeElement

@@ -4,7 +4,7 @@ export default {
     commit('addTempItem', { item })
     // 设置选中
     commit('select', {
-      uuid: state.tempItems[state.tempItems.length - 1].uuid
+      uuid: state.page.tempItems[state.page.tempItems.length - 1].uuid
     })
   },
 
@@ -12,7 +12,6 @@ export default {
   async designerInit({ state, commit, store }, tempInfo) {
     commit('initOptionItems', tempInfo.options)
     commit('initPage', tempInfo.tempValue)
-    commit('initTempItems', tempInfo.tempValue.tempItems || [])
 
   }
 }

@@ -14,10 +14,17 @@ export default {
   moving: false, // 是否正在移动元件（参考线仅在移动元件时显示）
 
   activeElement: getDefaultProps(), // 选中对象，要么是元件，要么是页面
-  page: {},
 
+  // 模板信息
+  page: {
+    title: 'demo',
+    width: 750,
+    height: 550,
+    pageWidth: 750,
+    pageHeight: 550,
+    tempItems: [], // 模板已选项
+  },
   optionItems: [], // 可选项
-  tempItems: [], // 模板已选项
 
   //模板参数
   tempId: '', // 模板Id
