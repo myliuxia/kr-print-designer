@@ -1,7 +1,7 @@
 {
   "name": "kr-print-designer",
   "version": "1.0.2",
-  "description": "一个基于Vue、ElementUi、Lodop的打印模板设计器。实现打印模板的设计、预览和打印功能.",
+  "description": "一个基于Vue、ElementUi、Lodop的打印模板设计器。实现打印模板的设计、预览和打印功能。",
   "publish": true,
   "main": "lib/kr-print-designer.umd.min.js",
   "keyword": "lodop print-designer",

@@ -2,7 +2,7 @@
 export const getDefaultProps = () => ({
   type: 'braid-txt',
   name: '',
-  isEidt: 1,
+  isEdit: 1,
   dragable: 1, // 是否可拖拽
   resizable: 1, // 尺寸是否可变
   width: 120,

@@ -28,17 +28,16 @@ export default {
   name: WIDGET_NAME,
   setting: {
     type: WIDGET_NAME,
-    isEidt: true,
-    isUpload: false,
+    isEdit: false,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
     width: 120,
     height: 40,
     left: 50,
     top: 0,
-    title: '表格',
-    value: [],
-    defaultValue: [],
+    title: '条码',
+    value: '1234567890',
+    defaultValue: '1234567890',
     name: '',
     style: {
       zIndex: 0,

@@ -51,7 +51,7 @@ export const attrJson = () => [
   },
   {
     "type": "braid-table",
-    "isEidt": 0,
+    "isEdit": 0,
     "title": "出库商品明细",
     "name": "table",
     "defaultValue": [

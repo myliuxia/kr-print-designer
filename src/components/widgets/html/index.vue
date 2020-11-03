@@ -2,7 +2,7 @@
   <div
     class="widgets"
     v-html="val.value"
-    :contenteditable="!!val.isEidt"
+    :contenteditable="!!val.isEdit"
     @blur="(e) => updateText(e, val.uuid)"
     :style="{
       position:'absolute',
@@ -26,8 +26,7 @@ export default {
   name: WIDGET_NAME,
   setting: {
     type: WIDGET_NAME,
-    isEidt: false,
-    isUpload: false,
+    isEdit: false,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
     dynamic: false, // 是否为动态内容

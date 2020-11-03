@@ -44,7 +44,7 @@
 <script>
 let itemAttr = {
   type: 'braid-table',
-  isEidt: 0,
+  isEdit: 0,
   title: '订单商品明细',
   name: 'details',
   value: '{details}',
@@ -140,8 +140,7 @@ export default {
   name: WIDGET_NAME,
   setting: {
     type: WIDGET_NAME,
-    isEidt: true,
-    isUpload: false,
+    isEdit: false, // 是否可编辑
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
     dynamic: false, // 是否为动态内容
@@ -152,6 +151,15 @@ export default {
     title: '表格',
     value: [],
     defaultValue: [],
+    tabelHtml: '',
+    columnsAttr: [
+      // {
+      //   title: '产品名称',
+      //   value: '{产品名称}',
+      //   name: 'productName',
+      // },
+    ], // 表格列选项
+    columns: [], // 已选表格列表
     name: '',
     style: {
       zIndex: 0,

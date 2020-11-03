@@ -18,31 +18,14 @@ export default {
         tempItems: [],
       },
       widgets: OutStockOptions,
-      uploadOption: {
-        url: 'https://jsonplaceholder.typicode.com/photos',
-      },
     }
   },
 
-  created() {
-    let data = window.localStorage.getItem('vpd-data')
-    if (data) {
-      this.value = JSON.parse(data)
-    }
-  },
+  created() {},
 
   methods: {
     handleSave(data) {
       console.log('saving:', data)
-    },
-    handleUpload(files) {
-      console.log('uploading:', files)
-      return new Promise((resolve) => {
-        resolve({
-          files: files,
-          status: 200,
-        })
-      })
     },
   },
 }

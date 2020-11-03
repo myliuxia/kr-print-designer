@@ -10,7 +10,7 @@
       zIndex: val.zIndex
     }"
   >
-    <img class="braid-image" :title="val.title" :src="val.defaultValue" />
+    <img class="braid-image" :title="val.title" :src="val.value || val.defaultValue" />
   </div>
 </template>
 
@@ -20,9 +20,8 @@ export default {
   name: WIDGET_NAME,
   setting: {
     type: WIDGET_NAME,
-    name: '',
-    isEidt: true,
-    isUpload: true,
+    title: '图片',
+    isEdit: false,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
     dynamic: true, // 是否为动态内容
@@ -30,9 +29,9 @@ export default {
     height: 40,
     left: 50,
     top: 0,
-    value: '图片',
-    title: '',
+    value: '',
     defaultValue: '',
+    name: '',
     style: {
       zIndex: 0,
       ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项

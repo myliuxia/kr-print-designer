@@ -2,7 +2,7 @@
   <div
     class="widgets"
     v-html="val.value"
-    :contenteditable="!!val.isEidt"
+    :contenteditable="!!val.isEdit"
     @blur="(e) => updateText(e, val.uuid)"
     :style="{
       position:'absolute',
@@ -22,7 +22,7 @@
 <script>
 // let itemAttr = {
 //   type: 'braid-txt',
-//   isEidt: 0,
+//   isEdit: 0,
 //   title: '收货人手机',
 //   value: '{收货人手机}',
 //   defaultValue: '18982068702',
@@ -37,8 +37,7 @@ export default {
   name: WIDGET_NAME,
   setting: {
     type: WIDGET_NAME,
-    isEidt: true,
-    isUpload: false,
+    isEdit: true,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
     dynamic: false, // 是否为动态内容
