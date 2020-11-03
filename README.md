@@ -1,4 +1,4 @@
-# advanced-filter
+# kr-print-designer
 ### 简介
 
   一个基于Vue、ElementUi、Lodop的打印模板设计器。实现打印模板的设计、预览和打印功能。
