@@ -12,6 +12,6 @@ export default {
   async designerInit({ state, commit, store }, tempInfo) {
     commit('initOptionItems', tempInfo.options)
     commit('initPage', tempInfo.tempValue)
-
   }
+
 }

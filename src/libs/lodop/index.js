@@ -10,7 +10,8 @@ export default { print, preview, previewTemp }
  */
 function print(temp, data) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
-  let printContent = data.length > 0 ? _TempParser(temp.tempItems, data) : [cloneDeep(temp.tempItems)]
+  let tempItems = cloneDeep(temp.tempItems)
+  let printContent = data.length > 0 ? _TempParser(tempItems, data) : [tempItems]
   if (data.printContent > 1) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
@@ -37,7 +38,8 @@ function print(temp, data) {
  */
 function preview(temp, data) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
-  let printContent = data.length > 0 ? _TempParser(temp.tempItems, data) : [cloneDeep(temp.tempItems)]
+  let tempItems = cloneDeep(temp.tempItems)
+  let printContent = data.length > 0 ? _TempParser(tempItems, data) : [tempItems]
   if (data.printContent > 1) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
@@ -102,11 +104,11 @@ function _TempParser(tempItem, data) {
   let temp = cloneDeep(tempItem)
   //修改模板答应项顺序
   //将自适应高度的打印项（item.style.AutoHeight == 1）放在第一项
-  let flag = temp.findIdex(item => item.style.AutoHeight == 1)
+  let flag = temp.findIndex(item => item.style.AutoHeight == 1)
   if (flag != -1) {
     let autoItem = temp[flag]
     temp.splice(flag, 1)
-    temp.unShift(autoItem)
+    temp.unshift(autoItem)
     // 处理位于自适应打印项下方的打印项
     temp.forEach(item => {
       // 位于自适应大项下的打印项修改top、left,并添加关联属性（style.LinkedItem）

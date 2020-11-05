@@ -1,3 +1,42 @@
+
+export const OutStockData = [
+  {
+    companyName: '九州科瑞',
+    stockoutCode: 'CK-12345678910231',
+    unitName: '四川科瑞成都分公司',
+    handlerName: '刘夏',
+    stockoutType: '销售出库',
+    warehouseName: '北京科瑞成都仓',
+    businessDate: '2020-08-27 12:00:00',
+    createUserName: '胡纪清',
+    created: '2020-08-27 12:00:00',
+    remark: '备注一下',
+    totalPrice: '129.00',
+    receivePerson: '易敏',
+    receivePhone: '18982068701',
+    address: '四川省成都市武侯区 天府软件园A2栋',
+    details: [
+      {
+        productName: '苹果ipone11pro',
+        skuName: 'iphone11pro256g',
+        specModel: '165L',
+        quantity: 3,
+        snCode: '[SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1]',
+        isUseSn: '1',
+        price: '23.00'
+      },
+      {
+        productName: '苹果ipone11pro',
+        skuName: 'iphone11pro124g',
+        specModel: '165L',
+        quantity: 3,
+        snCode: '[SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1]',
+        isUseSn: '1',
+        price: '12.00'
+      }
+    ]
+  }
+]
 export const OutStockOptions = [
   {
     type: 'braid-txt',
@@ -106,22 +145,6 @@ export const OutStockOptions = [
   {
     type: 'braid-txt',
     isEdit: 1,
-    title: '运输方式(销售)',
-    value: '{运输方式}',
-    defaultValue: '自提',
-    name: 'transportWayName'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '发票类型(销售)',
-    value: '{发票类型}',
-    defaultValue: '普通发票',
-    name: 'invoiceTypeName'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
     title: '合计金额',
     value: '{合计金额}',
     defaultValue: '123.00',
@@ -134,38 +157,6 @@ export const OutStockOptions = [
     value: '{摘要}',
     defaultValue: '北京采购入库成都摘要',
     name: 'remark'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '单据备注',
-    value: '{单据备注}',
-    defaultValue: '单据备注内容呢',
-    name: 'orderRemark'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '调出仓库',
-    value: '{调出仓库}',
-    defaultValue: '北京科瑞仓库',
-    name: 'deliverWarehouseName'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '调入仓库',
-    value: '{调入仓库}',
-    defaultValue: '四川科瑞仓库',
-    name: 'receiveWarehouseName'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '调拨人',
-    value: '{调拨人}',
-    defaultValue: 'jz001',
-    name: 'allocationUserName'
   },
   {
     type: 'braid-html',
@@ -293,14 +284,6 @@ export const InStockOptions = [
   {
     type: 'braid-txt',
     isEdit: 1,
-    title: '单据业务员',
-    value: '{单据业务员}',
-    defaultValue: 'zj001',
-    name: 'businessPersonName'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
     title: '入库类型',
     value: '{入库类型}',
     defaultValue: '采购入库',
@@ -349,42 +332,10 @@ export const InStockOptions = [
   {
     type: 'braid-txt',
     isEdit: 1,
-    title: '单据备注',
-    value: '{单据备注}',
-    defaultValue: '北京采购入库成都摘要',
-    name: 'orderRemark'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
     title: '合计金额',
     value: '{合计金额}',
     defaultValue: '12331.00',
     name: 'totalPrice'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '调出仓库',
-    value: '{调出仓库}',
-    defaultValue: '北京科瑞仓库',
-    name: 'deliverWarehouseName'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '调入仓库',
-    value: '{调入仓库}',
-    defaultValue: '四川科瑞仓库',
-    name: 'receiveWarehouseName'
-  },
-  {
-    type: 'braid-txt',
-    isEdit: 1,
-    title: '调拨人',
-    value: '{调拨人}',
-    defaultValue: 'jz001',
-    name: 'allocationUserName'
   },
   {
     type: 'braid-html',

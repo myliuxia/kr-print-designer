@@ -14,7 +14,8 @@
   "dependencies": {
     "element-ui": "2.13.0",
     "nanoid": "^1.0.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.4.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
