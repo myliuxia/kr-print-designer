@@ -94,27 +94,30 @@
       </el-form>
     </section>
     <section>
-      <div class="section">测试数据</div>
-      <el-form ref="testData" :model="testData" size="small" :inline="true">
-        <el-form-item label="出库数据">
-          <el-input
-            type="textarea"
-            style="width:920px"
-            :rows="11"
-            v-model="testData.OutStock"
-            placeholder="数据模板对应的数据，数据格式为json对象"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="入库数据">
-          <el-input
-            type="textarea"
-            style="width:920px"
-            :rows="11"
-            v-model="testData.InStock"
-            placeholder="数据模板对应的数据，数据格式为json对象"
-          ></el-input>
-        </el-form-item>
-      </el-form>
+      <el-collapse>
+        <el-collapse-item title="测试数据" name="1">
+          <el-form ref="testData" :model="testData" size="small" :inline="true">
+            <el-form-item label="出库数据">
+              <el-input
+                type="textarea"
+                style="width:920px"
+                :rows="8"
+                v-model="testData.OutStock"
+                placeholder="数据模板对应的数据，数据格式为json对象"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="入库数据">
+              <el-input
+                type="textarea"
+                style="width:920px"
+                :rows="8"
+                v-model="testData.InStock"
+                placeholder="数据模板对应的数据，数据格式为json对象"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </el-collapse-item>
+      </el-collapse>
     </section>
   </div>
 </template>
