@@ -1,13 +1,15 @@
 # kr-print-designer
 ### 简介
 
-  一个基于Vue、ElementUi、Lodop的打印模板设计器。实现打印模板的设计、预览和打印功能。[示例](http://192.168.7.229:9090/#/)
+  一个基于Vue、ElementUi、C-Lodop的打印模板设计器。实现打印模板的设计、预览和打印功能。[示例](http://192.168.7.229:9090/#/)
 
 ### 安装
 
+Vue项目中引用该组件
 ```
 npm install kr-print-designer
 ```
+打印功能基于C-Lodop打印控件，需前往[下载](http://www.lodop.net/download.html)
 
 ### 引入
 
