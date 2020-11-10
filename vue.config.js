@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: './',
   pages: {
     index: {
       // page 的入口
