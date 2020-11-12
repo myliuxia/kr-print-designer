@@ -11,7 +11,7 @@ export default { print, preview, previewTemp }
 function print(temp, data) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
   let tempItems = cloneDeep(temp.tempItems)
-  let printContent = data.length > 0 ? _TempParser(tempItems, data) : [tempItems]
+  let printContent = _TempParser(tempItems, data)
   if (data.printContent > 1) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
@@ -39,7 +39,7 @@ function print(temp, data) {
 function preview(temp, data) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
   let tempItems = cloneDeep(temp.tempItems)
-  let printContent = data.length > 0 ? _TempParser(tempItems, data) : [tempItems]
+  let printContent = _TempParser(tempItems, data)
   if (data.printContent > 1) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
@@ -65,8 +65,9 @@ function preview(temp, data) {
  */
 function previewTemp(temp) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
-  let printContent = cloneDeep(temp.tempItems)
-  printContent.forEach(printItem => {
+
+  let printContent = _TempParser(temp.tempItems)
+  printContent[0].forEach(printItem => {
     _AddPrintItem(LODOP, printItem)
   })
   let flag = LODOP.PREVIEW()
@@ -98,7 +99,8 @@ function _CreateLodop(pageName, width, height, pageWidth = 0, pageHeight = 0, to
 /**
  * 解析模板和数据生成打印项
  * @param {*Array} tempItem 模板打赢项
- * @param {*Array} data 打印数据
+ * @param {Array} data 打印数据,
+ * @return {Array} 若data为null则返回处理后的模板
  */
 function _TempParser(tempItem, data) {
   let temp = cloneDeep(tempItem)
@@ -120,21 +122,24 @@ function _TempParser(tempItem, data) {
     })
   }
 
-  // 解析打印模板和数据，生成生成打印内容
-  let tempContent = []
-  data.forEach(dataItem => {
-    let conItem = temp.map(tempItem => {
-      let item = cloneDeep(tempItem)
-      if (item.name) {
-        item.defaultValue = dataItem[item.name]
-        item.value = strTempToValue(item.value, item.defaultValue || '')
-      }
-      return item
+  if (data && data.length > 1) {
+    // 解析打印模板和数据，生成生成打印内容
+    let tempContent = []
+    data.forEach(dataItem => {
+      let conItem = temp.map(tempItem => {
+        let item = cloneDeep(tempItem)
+        if (item.name) {
+          item.defaultValue = dataItem[item.name]
+          item.value = strTempToValue(item.value, item.defaultValue || '')
+        }
+        return item
+      })
+      tempContent.push(conItem)
     })
-    tempContent.push(conItem)
-  })
-
-  return tempContent
+    return tempContent
+  } else {
+    return [temp]
+  }
 }
 
 

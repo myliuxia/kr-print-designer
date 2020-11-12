@@ -51,7 +51,7 @@
           <el-form-item label="纸张宽度" prop="pageWidth">
             <el-input v-model="form.pageWidth"></el-input>
           </el-form-item>
-          <el-form-item label="纸张宽度" prop="pageHeight">
+          <el-form-item label="纸张高度" prop="pageHeight">
             <el-input v-model="form.pageHeight"></el-input>
           </el-form-item>
         </el-form>
