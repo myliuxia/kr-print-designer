@@ -17,9 +17,9 @@ main.js
 
 ```javascript
 import Vue from 'vue'
-import vuePrintDesigner from "kr-filter"
+import KrPrintDesigner from "kr-filter"
 
-Vue.use(vuePrintDesigner)
+Vue.use(KrPrintDesigner)
 ```
 
 demo.vue
