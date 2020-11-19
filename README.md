@@ -1,9 +1,9 @@
 # kr-print-designer
-### 简介
+## 简介
 
   一个基于Vue、ElementUi、C-Lodop的打印模板设计器。实现打印模板的设计、预览和打印功能。[示例](http://192.168.7.229:9090/#/)
 
-### 安装
+## 安装
 
 Vue项目中引用该组件
 ```
@@ -11,7 +11,7 @@ npm install kr-print-designer
 ```
 打印功能基于C-Lodop打印控件，需前往[下载](http://www.lodop.net/download.html)
 
-### 引入
+## 引入
 
 main.js
 
@@ -27,11 +27,11 @@ demo.vue
 ```html
 <template>
   <div id="app">
-    <kr-print-designer :temp-value="value" :widget-options="widgets" @save="handleSave" />
+    <kr-print-designer :temp-value="value" :widget-options="widgets" :lodop-license="licenseInfo" @save="handleSave" />
   </div>
 </template>
 ```
-lodop打印/预览方法使用
+lodop打印/预览及设置lodop注册信息方法使用
 ```javascript
 // 直接打印
 this.$lodop.print(temp,data)
@@ -41,28 +41,18 @@ this.$lodop.preview(temp,data)
 
 // 预览打印模板
 this.$lodop.previewTemp(temp)
+
+// 设置Lodop产品注册信息
+this.$lodop.setLicenses(licenseInfo)
+
 ```
 
-### Attributes
+## Attributes
 
 | 参数      |           说明           | 类型   | 默认值 |
 | -------- | ---------------------- | ----- | ------ |
 | tempValue | 模板对象 | Object | ; |
-| widget-options | 模板设计选项配置 | Array | [] |
-
-### Events
-
-| 事件名称 |      说明      | 回调参数               |
-| ------- | ------------ | ---------------------- |
-| save | 点击保存时触发 | 设计后的模板对象 |
-
-### Methods
-
-| 事件名称 |      说明      | 回调参数               |
-| ------- | ------------ | ---------------------- |
-| print | 对数据和模板解析，实现打印 | Function(temp: object, data:array) |
-| preview | 对数据和模板解析，实现打印内容的预览 | Function(temp: object, data:array) |
-| previewTemp | 对模板进行预览 | Function(temp: object ) |
+| widgetOptions | 模板设计选项配置 | Array | [] |
 
 ### tempValue 参数详解
 
@@ -352,3 +342,46 @@ widgetOptions 为设计打印模板的打印项配置， 打印项有多种类�
 | ShowBarText | 是否显示条码值 | Number  | 0 / 1（不显示 / 显示） | 0 |
 | codeType | 条码类型 | Number  |'128A' / '128B' / '128C' / '128Auto' / 'EAN8' / 'EAN13' / 'EAN128A' / 'EAN128B' / 'EAN128C' / 'Code39' / '39Extended' / '2_5interleaved' / '2_5industrial' / '2_5matrix' / 'UPC_A' / 'UPC_E0' / 'UPC_E1' / 'UPCsupp2' / 'UPCsupp5' / 'Code93' / '93Extended' / 'MSI' / 'PostNet' / 'Codabar' | "Code39" |
 | ItemType | 打印项类型 | Number  | 0 / 1 / 2 / 3 / 4（普通项 / 页眉页脚/ 页号项/ 页数项/ 多页项） | 0 |
+
+## Events
+
+| 事件名称 |      说明      | 回调参数               |
+| ------- | ------------ | ---------------------- |
+| save | 点击保存时触发 | 设计后的模板对象 |
+
+## Methods
+
+| 事件名称 |      说明      | 回调参数               |
+| ------- | ------------ | ---------------------- |
+| print | 对数据和模板解析，实现打印 | Function(temp: object, data:array) |
+| preview | 对数据和模板解析，实现打印内容的预览 | Function(temp: object, data:array) |
+| previewTemp | 对模板进行预览 | Function(temp: object ) |
+| setLicenses | 设置Lodop软件产品注册信息 | Function(licenseInfo: object ) |
+
+### setLicenses 方法详解
+
+#### 回调示例：
+
+```javascript
+
+let licenseInfo = {
+  strCompanyName: '某某某公司',
+  strLicense: '******',
+  strLicenseA: '',
+  strLicenseB: '',
+}
+
+// 设置Lodop产品注册信息
+this.$lodop.setLicenses(licenseInfo)
+```
+
+#### licenseInfo 对象值说明：
+
+licenseInfo 为Lodop打印软件产品注册信息， 对象中参数具体解析如下：
+
+| 值 |                   说明                   | 类型    | 可选值                    | 默认值              |
+| --------- | -------------------------------------- | ------- | ------------------------- | ------------------ |
+| strCompanyName | 注册单位名称 | String  | —— | —— |
+| strLicense | 主注册号 | String  | —— | —— |
+| strLicenseA | 附加注册号A | String  | —— | —— |
+| strLicenseB | 附加注册号B | String  | —— | —— |

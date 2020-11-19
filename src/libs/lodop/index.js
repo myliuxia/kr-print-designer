@@ -2,7 +2,23 @@ import getLodop from './LodopFuncs'
 import cloneDeep from 'lodash/cloneDeep'
 import { tableTempTohtml, imageTempTohtml, strTempToValue, htmlTempTohtml } from './tools'
 
-export default { print, preview, previewTemp }
+let strCompanyName = ''
+let strLicense = ''
+let strLicenseA = ''
+let strLicenseB = ''
+
+export default { print, preview, previewTemp, setLicenses }
+
+/**
+ * 设置Lodop打印软件产品注册信息
+ * @param {*} licenseInfo 
+ */
+function setLicenses(licenseInfo) {
+  strCompanyName = licenseInfo.strCompanyName || ''
+  strLicense = licenseInfo.strLicense || ''
+  strLicenseA = licenseInfo.strLicenseA || ''
+  strLicenseB = licenseInfo.strLicenseB || ''
+}
 /**
  * 打印功能
  * @param {*Object} temp 打印模板
@@ -87,9 +103,12 @@ function previewTemp(temp) {
  */
 function _CreateLodop(pageName, width, height, pageWidth = 0, pageHeight = 0, top = 0, left = 0) {
   let LODOP = getLodop()
+
+  console.log(strCompanyName, strLicense, strLicenseA, strLicenseB)
+
   // 设置软件产品注册信息
-  // LODOP.SET_LICENSES('成都九洲电子信息系统股份有限公司', '1DAA3FA17DD9EF73566A29AC39CE300C', '成都九洲電子信息系統股份有限公司', 'F0F8A487D1A0DEBA028F42800034942A')
-  // LODOP.SET_LICENSES('THIRD LICENSE', '', 'Chengdu Jiuzhou Electronic Information System Co., Ltd.', '1E6D08DE79B42A3871D5EF3423D77853')
+  LODOP.SET_LICENSES(strCompanyName, strLicense, strLicenseA, strLicenseB)
+
   LODOP.PRINT_INITA(top, left, width, height, pageName)
   LODOP.SET_PRINT_PAGESIZE(1, pageWidth ? pageWidth + 'mm' : 0, pageHeight ? pageHeight + 'mm' : 0, '')
 
