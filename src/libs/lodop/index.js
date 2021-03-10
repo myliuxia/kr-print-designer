@@ -56,7 +56,7 @@ function preview(temp, data) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
   let tempItems = cloneDeep(temp.tempItems)
   let printContent = _TempParser(tempItems, data)
-  if (data.printContent > 1) {
+  if (data.length > 1) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
       LODOP.NewPageA()
@@ -141,7 +141,7 @@ function _TempParser(tempItem, data) {
     })
   }
 
-  if (data && data.length > 1) {
+  if (data && data.length > 0) {
     // 解析打印模板和数据，生成生成打印内容
     let tempContent = []
     data.forEach(dataItem => {

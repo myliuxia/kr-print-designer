@@ -1,20 +1,20 @@
 
 export const OutStockData = [
   {
-    companyName: '九州科瑞',
+    companyName: '四川某某公司',
     stockoutCode: 'CK-12345678910231',
-    unitName: '四川科瑞成都分公司',
-    handlerName: '刘夏',
+    unitName: '北京代理商',
+    handlerName: '刘某某',
     stockoutType: '销售出库',
-    warehouseName: '北京科瑞成都仓',
+    warehouseName: '京东北京仓',
     businessDate: '2020-08-27 12:00:00',
-    createUserName: '胡纪清',
+    createUserName: '胡某某',
     created: '2020-08-27 12:00:00',
     remark: '备注一下',
     totalPrice: '129.00',
-    receivePerson: '易敏',
+    receivePerson: '易某某',
     receivePhone: '18982068701',
-    address: '四川省成都市武侯区 天府软件园A2栋',
+    address: '四川省成都市武侯区 天府软件园',
     details: [
       {
         productName: '苹果ipone11pro',
@@ -48,14 +48,14 @@ export const OutStockData = [
 ]
 export const InStockData = [
   {
-    companyName: '九州科瑞',
+    companyName: '某某偶科技公司',
     purcheckCode: 'Rk-12345678910231',
-    unitName: '四川科瑞成都分公司',
+    unitName: '四川分销商',
     purchaseSaleManName: '刘夏',
     purcheckType: '采购入库',
-    warehouseName: '北京科瑞成都仓',
+    warehouseName: '京东成都仓',
     businessDate: '2020-08-27 12:00:00',
-    createUserName: '胡纪清',
+    createUserName: '胡某某',
     created: '2020-08-27 12:00:00',
     remark: '备注一下',
     totalPrice: '129.00',

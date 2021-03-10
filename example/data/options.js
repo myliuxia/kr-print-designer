@@ -1,42 +1,5 @@
 
-export const OutStockData = [
-  {
-    companyName: '九州科瑞',
-    stockoutCode: 'CK-12345678910231',
-    unitName: '四川科瑞成都分公司',
-    handlerName: '刘夏',
-    stockoutType: '销售出库',
-    warehouseName: '北京科瑞成都仓',
-    businessDate: '2020-08-27 12:00:00',
-    createUserName: '胡纪清',
-    created: '2020-08-27 12:00:00',
-    remark: '备注一下',
-    totalPrice: '129.00',
-    receivePerson: '易敏',
-    receivePhone: '18982068701',
-    address: '四川省成都市武侯区 天府软件园A2栋',
-    details: [
-      {
-        productName: '苹果ipone11pro',
-        skuName: 'iphone11pro256g',
-        specModel: '165L',
-        quantity: 3,
-        snCode: '[SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1]',
-        isUseSn: '1',
-        price: '23.00'
-      },
-      {
-        productName: '苹果ipone11pro',
-        skuName: 'iphone11pro124g',
-        specModel: '165L',
-        quantity: 3,
-        snCode: '[SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1] [SPP1Y79G1]',
-        isUseSn: '1',
-        price: '12.00'
-      }
-    ]
-  }
-]
+
 export const OutStockOptions = [
   {
     type: 'braid-txt',
@@ -51,7 +14,7 @@ export const OutStockOptions = [
     isEdit: 0,
     title: '公司名称',
     value: '{公司名称}',
-    defaultValue: '九州科瑞',
+    defaultValue: '某某公司',
     name: 'companyName'
   },
   {
@@ -91,7 +54,7 @@ export const OutStockOptions = [
     isEdit: 1,
     title: '出库仓库',
     value: '{出库仓库}',
-    defaultValue: '北京科瑞仓库',
+    defaultValue: '北京仓库',
     name: 'warehouseName'
   },
   {
@@ -123,7 +86,7 @@ export const OutStockOptions = [
     isEdit: 1,
     title: '收货人(销售)',
     value: '{收货人}',
-    defaultValue: 'liuxia',
+    defaultValue: '刘某某',
     name: 'receivePerson'
   },
   {
@@ -131,7 +94,7 @@ export const OutStockOptions = [
     isEdit: 1,
     title: '收货电话(销售)',
     value: '{收货人电话}',
-    defaultValue: 'liuxia',
+    defaultValue: '收货人',
     name: 'receivePhone'
   },
   {
@@ -139,7 +102,7 @@ export const OutStockOptions = [
     isEdit: 1,
     title: '收货地址(销售)',
     value: '{收货地址}',
-    defaultValue: 'liuxia',
+    defaultValue: '四川成都',
     name: 'address'
   },
   {
@@ -253,7 +216,7 @@ export const InStockOptions = [
     isEdit: 0,
     title: '公司名称',
     value: '{公司名称}',
-    defaultValue: '九州科瑞',
+    defaultValue: '科技公司',
     name: 'companyName'
   },
   {
@@ -294,7 +257,7 @@ export const InStockOptions = [
     isEdit: 1,
     title: '入库仓库',
     value: '{入库仓库}',
-    defaultValue: '北京科瑞仓库',
+    defaultValue: '成都仓库',
     name: 'warehouseName'
   },
   {
