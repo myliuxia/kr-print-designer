@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vuePrintDesigner from '../src'
+import vuePrintDesigner from '../src/index.ts'
 import VueRouter from 'vue-router'
 import Designer from './page/designer.vue'
 import Index from './page/index.vue'

@@ -1,5 +1,6 @@
 
-import { getDefaultProps } from '../libs/props.js'
+import { getDefaultProps } from '../libs/props'
+import {TempItem,Temp,License,LODOPType} from '@/types/index' 
 export default {
   zoom: 100, // 画布缩放百分比
   type: 'page', // 选中元素类型

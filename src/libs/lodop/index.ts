@@ -1,6 +1,7 @@
 import getLodop from './LodopFuncs'
 import cloneDeep from 'lodash/cloneDeep'
 import { tableTempTohtml, imageTempTohtml, strTempToValue, htmlTempTohtml } from './tools'
+import {TempItem,Temp,License,LODOPType} from '@/types/index' 
 
 let strCompanyName = ''
 let strLicense = ''
@@ -13,7 +14,7 @@ export default { print, preview, previewTemp, setLicenses }
  * 设置Lodop打印软件产品注册信息
  * @param {*} licenseInfo 
  */
-function setLicenses(licenseInfo) {
+function setLicenses(licenseInfo:License) {
   strCompanyName = licenseInfo.strCompanyName || ''
   strLicense = licenseInfo.strLicense || ''
   strLicenseA = licenseInfo.strLicenseA || ''
@@ -24,21 +25,21 @@ function setLicenses(licenseInfo) {
  * @param {*Object} temp 打印模板
  * @param {*Array} data 打印数据
  */
-function print(temp, data) {
+function print(temp:Temp, data:any[]) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
   let tempItems = cloneDeep(temp.tempItems)
   let printContent = _TempParser(tempItems, data)
-  if (data.printContent > 1) {
+  if (printContent.length > 1) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
       LODOP.NewPageA()
-      aPrint.forEach(printItem => {
+      aPrint.forEach((printItem:TempItem) => {
         _AddPrintItem(LODOP, printItem, index)
       })
     })
   } else {
     // 单份
-    printContent[0].forEach(printItem => {
+    printContent[0].forEach((printItem:TempItem) => {
       _AddPrintItem(LODOP, printItem)
     })
   }
@@ -52,7 +53,7 @@ function print(temp, data) {
  * @param {*Object} temp 打印模板
  * @param {*Array} data 打印数据
  */
-function preview(temp, data) {
+function preview(temp:Temp, data:any[]) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
   let tempItems = cloneDeep(temp.tempItems)
   let printContent = _TempParser(tempItems, data)
@@ -60,13 +61,13 @@ function preview(temp, data) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
       LODOP.NewPageA()
-      aPrint.forEach(printItem => {
+      aPrint.forEach((printItem:TempItem) => {
         _AddPrintItem(LODOP, printItem, index)
       })
     })
   } else {
     // 单份
-    printContent[0].forEach(printItem => {
+    printContent[0].forEach((printItem:TempItem) => {
       _AddPrintItem(LODOP, printItem)
     })
   }
@@ -79,7 +80,7 @@ function preview(temp, data) {
  * 模板预览功能
  * @param {*Object} temp 打印模板
  */
-function previewTemp(temp) {
+function previewTemp(temp:Temp) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
 
   let printContent = _TempParser(temp.tempItems)
@@ -101,10 +102,10 @@ function previewTemp(temp) {
  * @param top 可视区域上边距(单位px)
  * @param left 可视区域左边距(单位px)
  */
-function _CreateLodop(pageName, width, height, pageWidth = 0, pageHeight = 0, top = 0, left = 0) {
+function _CreateLodop(pageName:string, width:number, height:number, pageWidth:number = 0, pageHeight:number = 0, top:number = 0, left:number = 0) {
   let LODOP = getLodop()
 
-  console.log(strCompanyName, strLicense, strLicenseA, strLicenseB)
+  // console.log(strCompanyName, strLicense, strLicenseA, strLicenseB)
 
   // 设置软件产品注册信息
   LODOP.SET_LICENSES(strCompanyName, strLicense, strLicenseA, strLicenseB)
@@ -121,18 +122,18 @@ function _CreateLodop(pageName, width, height, pageWidth = 0, pageHeight = 0, to
  * @param {Array} data 打印数据,
  * @return {Array} 若data为null则返回处理后的模板
  */
-function _TempParser(tempItem, data) {
+function _TempParser(tempItem:TempItem[], data?:any[]):Array<TempItem[]> {
   let temp = cloneDeep(tempItem)
   //修改模板答应项顺序
   //将自适应高度的打印项（item.style.AutoHeight == 1）放在第一项
-  let flag = temp.findIndex(item => item.style.AutoHeight == 1)
+  let flag = temp.findIndex(item => item.style.AutoHeight)
   if (flag != -1) {
     let autoItem = temp[flag]
     temp.splice(flag, 1)
     temp.unshift(autoItem)
     // 处理位于自适应打印项下方的打印项
     temp.forEach(item => {
-      // 位于自适应大项下的打印项修改top、left,并添加关联属性（style.LinkedItem）
+      // 位于自适应高度项下的打印项修改top、left,并添加关联属性（style.LinkedItem）
       if (item.top > autoItem.top && item.style.ItemType == 0) {
         item.top = item.top - autoItem.top - autoItem.height
         item.left = item.left - autoItem.left
@@ -143,13 +144,13 @@ function _TempParser(tempItem, data) {
 
   if (data && data.length > 0) {
     // 解析打印模板和数据，生成生成打印内容
-    let tempContent = []
+    let tempContent:Array<TempItem[]> = []
     data.forEach(dataItem => {
-      let conItem = temp.map(tempItem => {
+      let conItem:TempItem[] = temp.map(tempItem => {
         let item = cloneDeep(tempItem)
         if (item.name) {
           item.defaultValue = dataItem[item.name]
-          item.value = strTempToValue(item.value, item.defaultValue || '')
+          item.value = strTempToValue(item.value, item.defaultValue as string)
         }
         return item
       })
@@ -168,7 +169,7 @@ function _TempParser(tempItem, data) {
  * @param {Object} printItem 打印项内容
  * @param {Number} pageIndex 当前打印页的开始序号
  */
-function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
+function _AddPrintItem(LODOP:LODOPType, printItem:TempItem, pageIndex = 0) {
   // 批量打印时，修改关联打印项的关联序号
   if (printItem.style && printItem.style.LinkedItem == 1) {
     printItem.style.LinkedItem = 1 + pageIndex
@@ -196,8 +197,8 @@ function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
       break
     case 'braid-html':
       {
-        let html = htmlTempTohtml(printItem.defaultValue, printItem.style)
-        if (printItem.style && printItem.style.AutoHeight == 1) {
+        let html = htmlTempTohtml(printItem.defaultValue as string, printItem.style)
+        if (printItem.style && printItem.style.AutoHeight) {
           LODOP.ADD_PRINT_HTM(
             printItem.top,
             printItem.left,
@@ -219,8 +220,8 @@ function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
       break
     case 'braid-table':
       {
-        let html = tableTempTohtml(printItem.columns, printItem.defaultValue, printItem.style)
-        if (printItem.style && printItem.style.AutoHeight == 1) {
+        let html = tableTempTohtml(printItem.columns?printItem.columns:[], printItem.defaultValue as any[], printItem.style)
+        if (printItem.style && printItem.style.AutoHeight) {
           LODOP.ADD_PRINT_TABLE(
             printItem.top,
             printItem.left,

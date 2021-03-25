@@ -1,10 +1,19 @@
 import Vue from 'vue'
 
-function resolveSource(source, type) {
+interface StoreArg {
+  state:Object
+  mutations:Object
+  actions:Object
+  plugins:Object[] 
+  subscribers:any[]
+}
+
+
+function resolveSource(source:Object, type:Function|string) {
   return typeof type === 'function' ? type : source[type]
 }
 
-function normalizeMap(map) {
+function normalizeMap(map:any[]|Object) {
   return Array.isArray(map)
     ? map.map(k => ({ k, v: k }))
     : Object.keys(map).map(k => ({ k, v: map[k] }))
@@ -42,8 +51,15 @@ const mapToMethods = (sourceName, runnerName, _store) => map => {
 }
 
 export default class Store {
+  vm:Vue
+  mutations:Object
+  actions:Object
+  subscribers:any[]
+  mapState:Object
+  mapActions:Object
+  mapMutations:Object
   constructor(
-    { state, mutations = {}, actions = {}, plugins, subscribers = [] } = {}
+    { state, mutations = {}, actions = {}, plugins, subscribers = [] }:StoreArg
   ) {
     this.vm = new Vue({
       data: {
@@ -55,7 +71,7 @@ export default class Store {
     this.subscribers = subscribers
 
     if (plugins) {
-      plugins.forEach(p => this.use(p))
+      plugins.forEach((p:any) => this.use(p))
     }
 
     this.mapState = createMapState(this)
@@ -75,26 +91,26 @@ export default class Store {
     }
   }
 
-  $emit(event, ...args) {
+  $emit(event:string, ...args:any[]) {
     return this.vm.$emit(event, ...args)
   }
 
-  $on(event, callback) {
+  $on(event:string, callback:Function) {
     return this.vm.$on(event, callback)
   }
 
-  subscribe(sub) {
+  subscribe(sub:any) {
     this.subscribers.push(sub)
     return () => this.subscribers.splice(this.subscribers.indexOf(sub), 1)
   }
 
-  commit(type, payload) {
+  commit(type:string, payload:any) {
     this.subscribers.forEach(sub => sub({ type, payload }, this.state))
     const mutation = resolveSource(this.mutations, type)
     return mutation && mutation(this.state, payload)
   }
 
-  dispatch(type, payload) {
+  dispatch(type:string, payload:any):any {
     const action = resolveSource(this.actions, type)
     const ctx = {
       state: this.state,
@@ -105,12 +121,12 @@ export default class Store {
     return Promise.resolve(action && action(ctx, payload))
   }
 
-  use(fn) {
+  use(fn:Function) {
     fn(this)
     return this
   }
 
-  replaceState(state) {
+  replaceState(state:Object) {
     this.vm.$data.$$state = state
     return this
   }

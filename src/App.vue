@@ -85,7 +85,6 @@ html {
   .kr-designer-view {
     flex: 1;
     display: flex;
-    flex-direction: column;
   }
   .kr-designer-tool {
     width: 400px;

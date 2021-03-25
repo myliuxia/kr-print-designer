@@ -1,5 +1,5 @@
 const generate = require('nanoid/generate')
-import { getDefaultProps, styleMap } from '../libs/props.js'
+import { getDefaultProps, styleMap } from '../libs/props'
 export default {
   // 初始化页面属性
   initPage(state, pageInfo) {
