@@ -46,26 +46,8 @@ export default {
     optionItems() {
       return this.$vptd.state.optionItems
     },
-    // 系统打印项
-    systemLayers() {
-      let widget = this.$vptd.state.widgetSetting
-      return [
-        { ...widget['braid-txt'], title: '静态文本', value: '静态文本', dynamic: false },
-        { ...widget['braid-txt'], title: '动态文本', dynamic: true },
-
-        { ...widget['braid-image'], title: '静态图片', dynamic: false },
-        { ...widget['braid-image'], title: '动态图片', dynamic: true },
-
-        { ...widget['braid-html'], title: '静态html', dynamic: false },
-        { ...widget['braid-html'], title: '动态html', dynamic: true },
-
-        { ...widget['braid-tabel'], title: '表格', dynamic: true },
-      ]
-    },
   },
-  mounted() {
-    // console.log(this.systemLayers)
-  },
+  mounted() {},
   methods: {
     // 添加组件
     addTempItem(e, item) {

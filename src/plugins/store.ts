@@ -1,11 +1,16 @@
 import Vue from 'vue'
+// import Vue from 'vue/types/vue'
+import {State} from '@/store/types'
 
-interface StoreArg {
-  state:Object
-  mutations:Object
-  actions:Object
-  plugins:Object[] 
-  subscribers:any[]
+
+export interface StoreArg {
+  state:State 
+  mutations?:Object
+  actions?:Object
+  plugins?:Object[] 
+  subscribers?:any[]
+  commit?:Function
+  dispatch?:Function
 }
 
 
@@ -13,57 +18,18 @@ function resolveSource(source:Object, type:Function|string) {
   return typeof type === 'function' ? type : source[type]
 }
 
-function normalizeMap(map:any[]|Object) {
-  return Array.isArray(map)
-    ? map.map(k => ({ k, v: k }))
-    : Object.keys(map).map(k => ({ k, v: map[k] }))
-}
-
-const createMapState = _store => states => {
-  const res = {}
-  const db = normalizeMap(states)
-  for (const k in db) {
-    let v = db[k]
-    res[k] = function () {
-      const store = _store || this.$vptd
-      return typeof v === 'function'
-        ? v.call(this, store.state)
-        : store.state[v]
-    }
-  }
-  return res
-}
-
-const mapToMethods = (sourceName, runnerName, _store) => map => {
-  const res = {}
-  const db = normalizeMap(map)
-  for (const k in db) {
-    let v = db[k]
-    res[k] = function (payload) {
-      const store = _store || this.$vptd
-      const source = store[sourceName]
-      const runner = store[runnerName]
-      const actualSource = typeof v === 'function' ? v.call(this, source) : v
-      return runner.call(store, actualSource, payload)
-    }
-  }
-  return res
-}
 
 export default class Store {
   vm:Vue
   mutations:Object
   actions:Object
   subscribers:any[]
-  mapState:Object
-  mapActions:Object
-  mapMutations:Object
   constructor(
     { state, mutations = {}, actions = {}, plugins, subscribers = [] }:StoreArg
   ) {
     this.vm = new Vue({
       data: {
-        $$state: typeof state === 'function' ? state() : state
+        $$state: state
       }
     })
     this.mutations = mutations
@@ -74,9 +40,6 @@ export default class Store {
       plugins.forEach((p:any) => this.use(p))
     }
 
-    this.mapState = createMapState(this)
-    this.mapActions = mapToMethods('actions', 'dispatch', this)
-    this.mapMutations = mapToMethods('mutations', 'commit', this)
   }
 
   get state() {
@@ -132,6 +95,3 @@ export default class Store {
   }
 }
 
-export const mapState = createMapState()
-export const mapActions = mapToMethods('actions', 'dispatch')
-export const mapMutations = mapToMethods('mutations', 'commit')

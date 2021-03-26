@@ -3,6 +3,7 @@
 import {TempItem,Temp,License,LODOPType} from '@/types/index' 
 
 export const getDefaultProps = ():TempItem => ({
+  uuid:'',
   type: 'braid-txt',
   name: '',
   isEdit: true,

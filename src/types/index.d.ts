@@ -20,6 +20,7 @@ export interface TempItemStyle{
 
 // 模板元素项
 export interface TempItem {
+  uuid?:string|number
   type:WidgetType
   name: string
   isEdit: boolean // 是否可编辑 

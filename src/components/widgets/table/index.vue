@@ -28,14 +28,7 @@
         >{{item.title}}</th>
       </tr>
       <tr>
-        <td
-          v-for="item in columns"
-          :key="item.name"
-          :rowspan="item.name==='_seq'?rowspan:''"
-        >{{item.value}}</td>
-      </tr>
-      <tr v-for="item in rows" :key="item.name">
-        <td :colspan="colspan" v-html="item.value"></td>
+        <td v-for="item in columns" :key="item.name">{{item.value}}</td>
       </tr>
     </table>
   </div>
@@ -177,22 +170,8 @@ export default {
   computed: {
     // 去掉type='row'的数据
     columns() {
-      let col = this.val.columns.filter((item) => item.type != 'row')
+      let col = this.val.columns
       return col
-    },
-    // 提取出type='row'的数据
-    rows() {
-      let rows = this.val.columns.filter((item) => item.type == 'row')
-      return rows
-    },
-    // 一条数据所占的行数
-    rowspan() {
-      return 1 + this.rows.length
-    },
-    // 除去序号外数据所占的列数
-    colspan() {
-      let contentCol = this.columns.filter((item) => item.name !== '_seq')
-      return contentCol.length
     },
   },
   methods: {},

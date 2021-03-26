@@ -16,13 +16,11 @@
 <script>
 import Viewport from './components/viewport/index.vue'
 import Panel from './components/panel/index.vue'
-import vptd from './mixins/vptd'
 import Vue from 'vue'
 import widgets from './components/widgets'
 import cloneDeep from 'lodash/cloneDeep'
 
 export default {
-  mixins: [vptd],
   name: 'kr-print-designer',
   components: { Viewport, Panel },
   props: {

@@ -6,11 +6,13 @@ import './assets/style/index.scss'
 // LODOP打印服务
 import './libs/lodop/LodopFuncs.js'
 import lodop from './libs/lodop/index'
+import vptd from './store/index'
 
 const install = function (Vue:any, opts = {}) {
   Vue.use(ElementUI);
   Vue.component('kr-print-designer', KrPrintDesigner)
   Vue.prototype.$lodop = lodop
+  Vue.prototype.$vptd = vptd
 
 };
 
