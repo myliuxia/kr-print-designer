@@ -14,45 +14,37 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { TempItem } from '@/types'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 const WIDGET_NAME = 'braid-image'
-export default {
-  name: WIDGET_NAME,
-  setting: {
-    type: WIDGET_NAME,
-    title: '图片',
-    isEdit: false,
-    dragable: true, // 是否可拖拽
-    resizable: true, // 尺寸是否可变
-    dynamic: true, // 是否为动态内容
-    width: 120,
-    height: 40,
-    left: 50,
-    top: 0,
-    value: '',
-    defaultValue: '',
-    name: '',
-    style: {
-      zIndex: 0,
-      ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
-    },
+export const setting: TempItem = {
+  type: WIDGET_NAME,
+  title: '图片',
+  isEdit: false,
+  dragable: true, // 是否可拖拽
+  resizable: true, // 尺寸是否可变
+  width: 120,
+  height: 40,
+  left: 50,
+  top: 0,
+  value: '',
+  defaultValue: '',
+  name: '',
+  style: {
+    zIndex: 0,
+    ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
   },
-  props: [
-    'val', // 图片对象
-  ],
-  data() {
-    return {}
-  },
-  computed: {
-    imageUrl() {
-      return this.val.value
-    },
-  },
-  watch: {
-    val(newVal) {
-      this.imageUrl = newVal.value
-    },
-  },
+}
+
+@Component
+export default class BraidImage extends Vue {
+  public name = WIDGET_NAME
+  @Prop() val!: TempItem
+
+  get imageUrl() {
+    return this.val.value
+  }
 }
 </script>
 

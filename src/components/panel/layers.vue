@@ -12,43 +12,39 @@
   </div>
 </template>
 
-<script>
-import vptd from '../../mixins/vptd'
+<script lang="ts">
 import { cumulativeOffset, checkInView } from '../../utils/offset'
+import { Component, Vue } from 'vue-property-decorator'
+import { TempItem } from '@/types'
 
-export default {
-  mixins: [vptd],
-  data() {
-    return {
-      sysLayer: [{}],
-    }
-  },
-  computed: {
-    // 已添加的组件
-    layers() {
-      return this.$vptd.state.page.tempItems
-    },
-    activeElement() {
-      return this.$vptd.state.activeElement
-    },
-  },
-  methods: {
-    activeLayer(e, item) {
-      this.$vptd.commit('select', {
-        uuid: item.uuid,
-      })
-      let viewport = document.querySelector('#viewport')
+@Component
+export default class Layers extends Vue {
+  // 已添加的组件
+  get layers(): TempItem[] {
+    return this.$vptd.state.page.tempItems
+  }
+  get activeElement(): TempItem {
+    return this.$vptd.state.activeElement
+  }
+  private activeLayer(e: any, item: TempItem) {
+    this.$vptd.commit('select', {
+      uuid: item.uuid,
+    })
+    let viewport = document.querySelector('#viewport')
+    if (viewport) {
       let target = viewport.querySelector(`[data-uuid='${item.uuid}']`)
       if (target && !checkInView(target)) {
         viewport.scrollTop = cumulativeOffset(target).top - 50
       }
-    },
+    } else {
+      console.error('未找到 "#viewport" 的节点')
+    }
+  }
 
-    // 删除元件
-    dele(e, item) {
-      this.$vptd.commit('delete', item.uuid)
-    },
-  },
+  // 删除元件
+  dele(e: any, item: TempItem) {
+    this.$vptd.commit('delete', item.uuid)
+  }
 }
 </script>
 <style lang="scss" scoped>

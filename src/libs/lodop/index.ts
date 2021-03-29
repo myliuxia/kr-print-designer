@@ -150,7 +150,7 @@ function _TempParser(tempItem:TempItem[], data?:any[]):Array<TempItem[]> {
         let item = cloneDeep(tempItem)
         if (item.name) {
           item.defaultValue = dataItem[item.name]
-          item.value = strTempToValue(item.value, item.defaultValue as string)
+          item.value = strTempToValue(item.value as string, item.defaultValue as string)
         }
         return item
       })
@@ -243,7 +243,7 @@ function _AddPrintItem(LODOP:LODOPType, printItem:TempItem, pageIndex = 0) {
       break
     case 'braid-image':
       {
-        let html = imageTempTohtml(printItem.value)
+        let html = imageTempTohtml(printItem.value as string)
         LODOP.ADD_PRINT_IMAGE(
           printItem.top,
           printItem.left,

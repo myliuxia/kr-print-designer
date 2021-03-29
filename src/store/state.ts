@@ -1,7 +1,7 @@
 
 import { getDefaultProps } from '../libs/props'
-import {TempItem,Temp,License,LODOPType} from '@/types/index' 
 import {State} from './types'
+import widgets from '@/components/widgets/index'
  
 export default <State> {
   zoom: 100, // 画布缩放百分比
@@ -32,5 +32,5 @@ export default <State> {
   tempId: '', // 模板Id
   loading: false, // 是否正在初始化中
 
-  widgetSetting: {}, // 模板组件默认属性
+  widgetSetting: widgets.getWidgetsSetting(), // 模板组件默认属性
 }

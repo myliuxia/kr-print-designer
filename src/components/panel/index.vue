@@ -29,24 +29,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import page from './page.vue'
 import style from './style.vue'
 import options from './options/index.vue'
 import layers from './layers.vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default {
+@Component({
   components: {
     page,
     appearance: style,
     options,
     layers,
   },
-
-  data() {
-    return {
-      activeNames: ['1', '2', '3', '4'],
-    }
-  },
+})
+export default class Panel extends Vue {
+  private activeNames: string[] = ['1', '2', '3', '4']
 }
 </script>

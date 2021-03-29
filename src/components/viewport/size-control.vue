@@ -54,59 +54,52 @@
   </div>
 </template>
 
-<script>
-import vptd from '../../mixins/vptd'
-export default {
-  mixins: [vptd],
-  data() {
-    return {
-      type: '', // 调整方向 left | right | up | down
-    }
-  },
-  computed: {
-    optionsType() {
-      return this.$vptd.state.type
-    },
-    elm() {
-      let target = this.$vptd.state.activeElement
-      if (!target.resizable) return ''
-      return target
-    },
-  },
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+@Component
+export default class ViewPort extends Vue {
+  public type = '' // 调整方向 left | right | up | down
 
-  methods: {
-    handlemousedown(e, type, originX, originY) {
-      e.stopPropagation()
-      this.type = type
+  get optionsType() {
+    return this.$vptd.state.type
+  }
+  get elm() {
+    let target = this.$vptd.state.activeElement
+    if (!target.resizable) return ''
+    return target
+  }
 
-      this.$vptd.commit('initmove', {
-        startX: e.pageX,
-        startY: e.pageY,
-        originX: this.elm[originX],
-        originY: this.elm[originY],
-      })
+  private handlemousedown(e: any, type: string, originX: number, originY: number) {
+    e.stopPropagation()
+    this.type = type
 
-      document.addEventListener('mousemove', this.handlemousemove, true)
-      document.addEventListener('mouseup', this.handlemouseup, true)
-    },
+    this.$vptd.commit('initmove', {
+      startX: e.pageX,
+      startY: e.pageY,
+      originX: this.elm[originX],
+      originY: this.elm[originY],
+    })
 
-    handlemousemove(e) {
-      e.stopPropagation()
-      e.preventDefault()
+    document.addEventListener('mousemove', this.handlemousemove, true)
+    document.addEventListener('mouseup', this.handlemouseup, true)
+  }
 
-      this.$vptd.commit('resize', {
-        x: e.pageX,
-        y: e.pageY,
-        type: this.type,
-      })
-    },
+  private handlemousemove(e: any) {
+    e.stopPropagation()
+    e.preventDefault()
 
-    handlemouseup() {
-      document.removeEventListener('mousemove', this.handlemousemove, true)
-      document.removeEventListener('mouseup', this.handlemouseup, true)
-      this.$vptd.commit('stopmove')
-    },
-  },
+    this.$vptd.commit('resize', {
+      x: e.pageX,
+      y: e.pageY,
+      type: this.type,
+    })
+  }
+
+  private handlemouseup() {
+    document.removeEventListener('mousemove', this.handlemousemove, true)
+    document.removeEventListener('mouseup', this.handlemouseup, true)
+    this.$vptd.commit('stopmove')
+  }
 }
 </script>
 

@@ -19,9 +19,7 @@
   </el-popover>
 </template>
 <script>
-import vptd from '../../../../mixins/vptd'
 export default {
-  mixins: [vptd],
   props: {
     item: Object,
   },

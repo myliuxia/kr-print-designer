@@ -30,45 +30,42 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Component, { mixins } from 'vue-class-component'
 import control from './size-control.vue'
 import move from '../../mixins/move'
-import vptd from '../../mixins/vptd'
-
-export default {
+@Component({
   components: {
     control, // 尺寸控制
   },
+})
+export default class Viewport extends mixins(move) {
+  // 已添加的组件
+  get widgetStore() {
+    return this.$vptd.state.page.tempItems
+  }
+  // 背景图地址
+  get backImg() {
+    return this.$vptd.state.page.imageUrl ? this.$vptd.state.page.imageUrl : ''
+  }
 
-  mixins: [move, vptd],
-
-  data() {
-    return {}
-  },
-
-  computed: {
-    // 已添加的组件
-    widgetStore() {
-      return this.$vptd.state.page.tempItems
-    },
-    // 背景图地址
-    backImg() {
-      return this.$vptd.state.page.imageUrl ? this.$vptd.state.page.imageUrl : ''
-    },
-
-    // 画布高度
-    page() {
-      return this.$vptd.state.page
-    },
-    // 选中项id
-    widgetId() {
-      return this.$vptd.state.uuid
-    },
-  },
+  // 画布高度
+  get page() {
+    return this.$vptd.state.page
+  }
+  // 选中项id
+  get widgetId() {
+    return this.$vptd.state.uuid
+  }
 
   mounted() {
     // 采用事件代理的方式监听元件的选中操作
-    document.getElementById('viewport').addEventListener('mousedown', this.handleSelection, false)
+    let viewportDom = document.getElementById('viewport')
+    if (viewportDom) {
+      viewportDom.addEventListener('mousedown', this.handleSelection, false)
+    } else {
+      console.error('未找的‘viewport’节点')
+    }
 
     // 绑定键盘上下左右键用于元件的移动
     document.addEventListener(
@@ -100,48 +97,46 @@ export default {
       },
       true
     )
-  },
+  }
 
-  methods: {
-    /**
-     * 目标元素获得焦点
-     */
-    handleSelection(e) {
-      var target = this.selectTarget(e.target)
-      if (target) {
-        var uuid = target.getAttribute('data-uuid')
-        // 设置选中元素
-        this.$vptd.commit('select', {
-          uuid: uuid || -1,
-        })
-        // 绑定移动事件：除背景图以外的元件才能移动
-        target = this.$vptd.state.activeElement
-        if (target.dragable) {
-          this.initmovement(e) // 参见 mixins
-        }
-      } else {
-        // 取消选中元素
-        this.$vptd.commit('select', {
-          uuid: -1,
-        })
+  /**
+   * 目标元素获得焦点
+   */
+  private handleSelection(e: any) {
+    var target = this.selectTarget(e.target)
+    if (target) {
+      var uuid = target.getAttribute('data-uuid')
+      // 设置选中元素
+      this.$vptd.commit('select', {
+        uuid: uuid || -1,
+      })
+      // 绑定移动事件：除背景图以外的元件才能移动
+      target = this.$vptd.state.activeElement
+      if (target.dragable) {
+        this.initmovement(e) // 参见 mixins
       }
-    },
-    /**
-     * 获得选中的目标，如果没有返回false
-     */
-    selectTarget(target) {
-      let type = target.getAttribute('data-type')
-      if (type) {
-        if (type === 'viewport') {
-          return false
-        } else {
-          return target
-        }
+    } else {
+      // 取消选中元素
+      this.$vptd.commit('select', {
+        uuid: -1,
+      })
+    }
+  }
+  /**
+   * 获得选中的目标，如果没有返回false
+   */
+  private selectTarget(target: any): any {
+    let type = target.getAttribute('data-type')
+    if (type) {
+      if (type === 'viewport') {
+        return false
       } else {
-        return this.selectTarget(target.parentNode)
+        return target
       }
-    },
-  },
+    } else {
+      return this.selectTarget(target.parentNode)
+    }
+  }
 }
 </script>
 

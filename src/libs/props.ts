@@ -54,9 +54,9 @@ export const getDefaultProps = ():TempItem => ({
 //     ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
 //   },
 // }
-export const getCodeTypeArray = () => (['128A', '128B', '128C', '128Auto', 'EAN8', 'EAN13', 'EAN128A', 'EAN128B', 'EAN128C', 'Code39', '39Extended', '2_5interleaved', '2_5industrial', '2_5matrix', 'UPC_A', 'UPC_E0', 'UPC_E1', 'UPCsupp2', 'UPCsupp5', 'Code93', '93Extended', 'MSI', 'PostNet', 'Codabar'])
+export const getCodeTypeArray = ():string[] => (['128A', '128B', '128C', '128Auto', 'EAN8', 'EAN13', 'EAN128A', 'EAN128B', 'EAN128C', 'Code39', '39Extended', '2_5interleaved', '2_5industrial', '2_5matrix', 'UPC_A', 'UPC_E0', 'UPC_E1', 'UPCsupp2', 'UPCsupp5', 'Code93', '93Extended', 'MSI', 'PostNet', 'Codabar'])
 
-export const getItemTypeArray = () => ([
+export const getItemTypeArray = ():{label:string,value:number}[] => ([
   { label: '普通项', value: 0 },
   { label: '页眉页脚', value: 1 },
   { label: '页号项', value: 2 },

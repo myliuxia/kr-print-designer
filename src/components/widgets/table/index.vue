@@ -6,7 +6,7 @@
       top:  val.top + 'px',
       width: val.width + 'px',
       height: val.height + 'px',
-      textAlign: val.style.Alignment==1?'left':val.style.Alignment==2?'center':'right',
+      textAlign: val.style.Alignment,
       fontSize: val.style.FontSize + 'pt',
       color: val.style.FontColor,
     }"
@@ -34,7 +34,9 @@
   </div>
 </template>
 
-<script>
+<script  lang="ts">
+import { TempItem, TempTabelCol } from '@/types'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 let itemAttr = {
   type: 'braid-table',
   isEdit: 0,
@@ -124,57 +126,43 @@ let itemAttr = {
   columns: [],
 }
 
-import vptd from '../../../mixins/vptd'
-
 const WIDGET_NAME = 'braid-table'
 
-export default {
-  mixins: [vptd],
-  name: WIDGET_NAME,
-  setting: {
-    type: WIDGET_NAME,
-    isEdit: false, // 是否可编辑
-    dragable: true, // 是否可拖拽
-    resizable: true, // 尺寸是否可变
-    dynamic: false, // 是否为动态内容
-    width: 240,
-    height: 60,
-    left: 50,
-    top: 10,
-    title: '表格',
-    value: [],
-    defaultValue: [],
-    tabelHtml: '',
-    columnsAttr: [
-      // {
-      //   title: '产品名称',
-      //   value: '{产品名称}',
-      //   name: 'productName',
-      // },
-    ], // 表格列选项
-    columns: [], // 已选表格列表
-    name: '',
-    style: {
-      zIndex: 0,
-      Alignment: 1, // 对齐方式 1--左靠齐 2--居中 3--右靠齐
-      FontSize: 9,
-      FontColor: '#000000',
-      BorderColor: '#000000',
-      AutoHeight: 0, // 高度自动（模板在该元素位置以下的元素都关联打印）
-      BottomMargin: 0, // 距离下边距
-    },
+export const setting: TempItem = {
+  type: WIDGET_NAME,
+  isEdit: false, // 是否可编辑
+  dragable: true, // 是否可拖拽
+  resizable: true, // 尺寸是否可变
+  width: 240,
+  height: 60,
+  left: 50,
+  top: 10,
+  title: '表格',
+  value: [],
+  defaultValue: [],
+  tabelHtml: '',
+  columnsAttr: [], // 表格列选项
+  columns: [], // 已选表格列表
+  selectCol: [],
+  name: '',
+  style: {
+    zIndex: 0,
+    Alignment: 'left', // 对齐方式 1--左靠齐 2--居中 3--右靠齐
+    FontSize: 9,
+    FontColor: '#000000',
+    BorderColor: '#000000',
+    AutoHeight: false, // 高度自动（模板在该元素位置以下的元素都关联打印）
+    BottomMargin: 0, // 距离下边距
   },
-  props: [
-    'val', // 文本对象
-  ],
-  computed: {
-    // 去掉type='row'的数据
-    columns() {
-      let col = this.val.columns
-      return col
-    },
-  },
-  methods: {},
+}
+@Component
+export default class BraidTable extends Vue {
+  public name = WIDGET_NAME
+  @Prop() val!: TempItem
+  get columns(): TempTabelCol[] {
+    let col = this.val.columns || []
+    return col
+  }
 }
 </script>
 

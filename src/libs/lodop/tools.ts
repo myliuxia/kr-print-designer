@@ -8,7 +8,7 @@ import {TempItem,Temp,License,TempTabelCol,TempItemStyle} from '@/types/index'
 export const tempToPrint = (temp:TempItem[], data:any) => {
   let printContent = temp.map(item => {
     var reg = /({[^{]*})/g
-    let value = item.value.replace(reg, data[item.name] || '')
+    let value = (item.value as string).replace(reg, data[item.name] || '')
     return {
       top: item.top,
       left: item.left,

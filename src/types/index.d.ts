@@ -4,7 +4,7 @@ type CodeType = '128A'| '128B'| '128C'| '128Auto'| 'EAN8'| 'EAN13'| 'EAN128A'| '
 // 打印元素项样式
 export interface TempItemStyle{
   zIndex: number = 0
-  FontSize?:string
+  FontSize?:number
   FontColor?:string
   BorderColor?:string 
   Bold?: boolean // 1代表粗体，0代表非粗体
@@ -16,6 +16,7 @@ export interface TempItemStyle{
   AutoHeight?:boolean // 是否高度自适应
   BottomMargin?:number
   LinkedItem?:number
+  ShowBarText?:boolean // 条码是否显示文字
 }
 
 // 模板元素项
@@ -30,13 +31,14 @@ export interface TempItem {
   height:number = 40
   left:number = 50
   top: number = 0
-  value:string='自定义文本'
+  value:string|any[]
   title:string= '自定义文本'
   defaultValue:string | any[]
   style:TempItemStyle
   tabelHtml?: string
-  columnsAttr?: TempTabelCol[],
-  columns?: TempTabelCol[],
+  columnsAttr?: TempTabelCol[], // table 表格列选项
+  columns?: TempTabelCol[], // table展示的列信息
+  selectCol?: string[], // table展示的列名称数组（用于多选框的双向绑定）
 }
 
 // 表格列数据类型

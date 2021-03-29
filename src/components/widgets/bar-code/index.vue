@@ -14,7 +14,7 @@
     <div
       class="text"
       :style="{
-        display:val.style.ShowBarText== 1 ? '' : 'none',
+        display:val.style.ShowBarText ? '' : 'none',
         fontSize: val.style.FontSize + 'pt',
         fontWeight: val.style.Bold ? 'bold' : 'normal'
       }"
@@ -22,37 +22,37 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { TempItem } from '@/types'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 const WIDGET_NAME = 'bar-code'
-export default {
-  name: WIDGET_NAME,
-  setting: {
-    type: WIDGET_NAME,
-    isEdit: false,
-    dragable: true, // 是否可拖拽
-    resizable: true, // 尺寸是否可变
-    width: 120,
-    height: 40,
-    left: 50,
-    top: 0,
-    title: '条码',
-    value: '1234567890',
-    defaultValue: '1234567890',
-    name: '',
-    style: {
-      zIndex: 0,
-      FontSize: 9,
-      ShowBarText: 0, // 条码是否显示值 0--不显示 1--显示
-      codeType: 'Code39', // 条码类型
-      ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
-    },
+export const setting: TempItem = {
+  type: WIDGET_NAME,
+  isEdit: false,
+  dragable: true, // 是否可拖拽
+  resizable: true, // 尺寸是否可变
+  width: 120,
+  height: 40,
+  left: 50,
+  top: 0,
+  title: '条码',
+  value: '1234567890',
+  defaultValue: '1234567890',
+  name: '',
+  style: {
+    zIndex: 0,
+    FontSize: 9,
+    ShowBarText: false, // 条码是否显示值 0--不显示 1--显示
+    codeType: 'Code39', // 条码类型
+    ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
   },
-  props: ['val'],
-  data() {
-    return {
-      codeImg: require('../../../assets/image/barCode.png'),
-    }
-  },
+}
+
+@Component
+export default class BarCode extends Vue {
+  public name = WIDGET_NAME
+  private codeImg = require('../../../assets/image/barCode.png')
+  @Prop() val!: TempItem
 }
 </script>
 <style lang="scss" scoped>

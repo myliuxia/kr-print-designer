@@ -64,8 +64,8 @@
             <el-switch
               :disabled="activeElement.style.Bold===undefined"
               v-model="activeElement.style.Bold"
-              :active-value="1"
-              :inactive-value="0"
+              :active-value="true"
+              :inactive-value="false"
             ></el-switch>
           </el-form-item>
         </el-col>
@@ -92,8 +92,8 @@
             <el-switch
               :disabled="activeElement.style.ShowBarText===undefined"
               v-model="activeElement.style.ShowBarText"
-              :active-value="1"
-              :inactive-value="0"
+              :active-value="true"
+              :inactive-value="false"
             ></el-switch>
           </el-form-item>
         </el-col>
@@ -104,9 +104,9 @@
             :disabled="activeElement.style.Alignment===undefined"
             v-model="activeElement.style.Alignment"
           >
-            <el-radio-button :label="1">左对齐</el-radio-button>
-            <el-radio-button :label="2">居中</el-radio-button>
-            <el-radio-button :label="3">右对齐</el-radio-button>
+            <el-radio-button :label="'left'">左对齐</el-radio-button>
+            <el-radio-button :label="'center'">居中</el-radio-button>
+            <el-radio-button :label="'right'">右对齐</el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-row>
@@ -143,8 +143,8 @@
             <el-switch
               :disabled="activeElement.style.AutoHeight===undefined"
               v-model="activeElement.style.AutoHeight"
-              :active-value="1"
-              :inactive-value="0"
+              :active-value="true"
+              :inactive-value="false"
             ></el-switch>
           </el-form-item>
         </el-col>
@@ -164,27 +164,22 @@
   </div>
 </template>
 
-<script>
-import vptd from '../../mixins/vptd'
+<script lang="ts">
 import { getCodeTypeArray, getItemTypeArray } from '../../libs/props'
+import { Component, Vue } from 'vue-property-decorator'
+import { TempItem } from '@/types'
 
-export default {
-  mixins: [vptd],
-  data() {
-    return {
-      codeTypeArray: getCodeTypeArray(),
-      itemTypeArray: getItemTypeArray(),
-    }
-  },
-  computed: {
-    activeElement() {
-      return this.$vptd.state.activeElement
-    },
-    // 页面高度
-    height() {
-      return this.$vptd.state.page.height
-    },
-  },
+@Component
+export default class Style extends Vue {
+  private codeTypeArray: string[] = getCodeTypeArray()
+  private itemTypeArray: { label: string; value: number }[] = getItemTypeArray()
+  get activeElement(): TempItem {
+    return this.$vptd.state.activeElement
+  }
+  // 页面高度
+  get height(): number {
+    return this.$vptd.state.page.height
+  }
 }
 </script>
 <style lang="scss" scoped>

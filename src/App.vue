@@ -13,52 +13,38 @@
   </div>
 </template>
 
-<script>
-import Viewport from './components/viewport/index.vue'
-import Panel from './components/panel/index.vue'
-import Vue from 'vue'
-import widgets from './components/widgets'
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import Viewport from '@/components/viewport/index.vue'
+import Panel from '@/components/panel/index.vue'
 import cloneDeep from 'lodash/cloneDeep'
 
-export default {
-  name: 'kr-print-designer',
+@Component({
   components: { Viewport, Panel },
-  props: {
-    widgetOptions: {
-      type: Array,
-      default: () => [
-        { type: 'braid-txt', title: '静态文本', value: '静态文本', defaultValue: '静态文本' },
-        { type: 'braid-txt', title: '动态文本', value: '', defaultValue: '动态文本', dynamic: true },
-      ],
-    },
-    tempValue: {
-      type: Object,
-      default: () => ({ title: 'demo', width: 750, height: 550, pageWidth: 750, pageHeight: 550, tempItems: [] }),
-    },
-  },
-  created() {
-    Vue.use(widgets)
+})
+export default class App extends Vue {
+  @Prop({ default: [] }) readonly widgetOptions!: any[]
+  @Prop({ default: { title: 'demo', width: 750, height: 550, pageWidth: 750, pageHeight: 550, tempItems: [] } })
+  readonly tempValue!: Object
 
-    // 设置模板组件默认属性
-    this.$vptd.commit('setWidgetSetting', widgets.getWidgetsSetting())
+  created() {
     // 初始化设计器
     this.$vptd.dispatch('designerInit', {
       tempValue: cloneDeep(this.tempValue),
       options: cloneDeep(this.widgetOptions),
     })
-  },
-  methods: {
-    // 保存模板
-    saveTemp() {
-      let page = this.$vptd.state.page
-      this.$emit('save', cloneDeep(page))
-    },
-    // 预览模板
-    previewTemp() {
-      let page = { ...this.$vptd.state.page }
-      this.$lodop.previewTemp(cloneDeep(page))
-    },
-  },
+  }
+
+  // 保存模板
+  private saveTemp() {
+    let page = this.$vptd.state.page
+    this.$emit('save', cloneDeep(page))
+  }
+  // 预览模板
+  private previewTemp() {
+    let page = { ...this.$vptd.state.page }
+    this.$lodop.previewTemp(cloneDeep(page))
+  }
 }
 </script>
 

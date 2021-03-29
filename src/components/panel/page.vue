@@ -54,36 +54,14 @@
   </div>
 </template>
 
-<script>
-import vptd from '../../mixins/vptd'
-export default {
-  mixins: [vptd],
-  computed: {
-    pageInfo() {
-      return this.$vptd.state.page
-    },
-  },
-  methods: {
-    // 自定义上传事件
-    httpRequestMethod(param) {
-      const formData = new FormData()
-      formData.append('file', param.file)
-      this.handleUploadFile(formData)
-    },
-    // 上传图片
-    async handleUploadFile(formData) {
-      // let [data, err] = await svc.uploadImgPrintTemp(formData)
-      // if (err) {
-      //   err.showAlert()
-      //   return
-      // }
-      // this.pageInfo.imageUrl = data
-    },
-    // 删除图片
-    deleteImg() {
-      this.pageInfo.imageUrl = ''
-    },
-  },
+<script lang="ts">
+import { Temp } from '@/types'
+import { Component, Vue } from 'vue-property-decorator'
+@Component
+export default class Page extends Vue {
+  get pageInfo(): Temp {
+    return this.$vptd.state.page
+  }
 }
 </script>
 
