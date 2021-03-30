@@ -37,13 +37,11 @@ export default class Options extends Vue {
   addTempItem(e: any, item: TempItem) {
     switch (item.type) {
       case 'braid-table': {
-        let selectCol: TempTabelCol[] = [](item.columns as TempTabelCol[]).forEach((col: TempTabelCol) => {
-          ;(item.columnsAttr as TempTabelCol[]).forEach((element) => {})
-          for (let colAttr of item.columnsAttr as TempTabelCol[]) {
-            if (colAttr.name == col) {
-              selectCol.push(colAttr)
-              break
-            }
+        let selectCol: TempTabelCol[] = []
+        ;(item.selectCol as string[]).forEach((itemName: string) => {
+          let colInfo = (item.columnsAttr as TempTabelCol[]).find((col) => col.name === itemName)
+          if (colInfo) {
+            selectCol.push(colInfo)
           }
         })
         item.columns = selectCol //表格显示的字段

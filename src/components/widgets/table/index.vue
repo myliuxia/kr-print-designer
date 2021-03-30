@@ -143,7 +143,7 @@ export const setting: TempItem = {
   tabelHtml: '',
   columnsAttr: [], // 表格列选项
   columns: [], // 已选表格列表
-  selectCol: [],
+  selectCol: [], // 已选表格列name数组（用于多选框双向绑定）
   name: '',
   style: {
     zIndex: 0,

@@ -37,8 +37,8 @@ export interface TempItem {
   style:TempItemStyle
   tabelHtml?: string
   columnsAttr?: TempTabelCol[], // table 表格列选项
-  columns?: TempTabelCol[], // table展示的列信息
-  selectCol?: string[], // table展示的列名称数组（用于多选框的双向绑定）
+  columns?: TempTabelCol[], // table 已选表格列表
+  selectCol?: string[] = [], // table 已选表格列name数组（用于多选框双向绑定）
 }
 
 // 表格列数据类型
