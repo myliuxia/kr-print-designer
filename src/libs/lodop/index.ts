@@ -1,7 +1,8 @@
 import getLodop from './LodopFuncs'
 import cloneDeep from 'lodash/cloneDeep'
 import { tableTempTohtml, imageTempTohtml, strTempToValue, htmlTempTohtml } from './tools'
-import {TempItem,Temp,License,LODOPType} from '@/types/index' 
+import {TempItem,Temp,License,LODOPType, TempItemStyle} from '@/types/index' 
+import { LodopItemStyle } from './lodop'
 
 let strCompanyName = ''
 let strLicense = ''
@@ -169,10 +170,16 @@ function _TempParser(tempItem:TempItem[], data?:any[]):Array<TempItem[]> {
  * @param {Object} printItem 打印项内容
  * @param {Number} pageIndex 当前打印页的开始序号
  */
-function _AddPrintItem(LODOP:LODOPType, printItem:TempItem, pageIndex = 0) {
+function _AddPrintItem(LODOP:LODOPType, tempItem:TempItem, pageIndex = 0) {
+  let printItem = cloneDeep(tempItem)
+  let lodopStyle =  createLodopStyle(printItem.style)
+  // TempItemStyle转换为LodopItemStyle
+
+
+
   // 批量打印时，修改关联打印项的关联序号
-  if (printItem.style && printItem.style.LinkedItem == 1) {
-    printItem.style.LinkedItem = 1 + pageIndex
+  if (lodopStyle.LinkedItem == 1) {
+    lodopStyle.LinkedItem = 1 + pageIndex
   }
   // 添加打印项
   switch (printItem.type) {
@@ -191,19 +198,19 @@ function _AddPrintItem(LODOP:LODOPType, printItem:TempItem, pageIndex = 0) {
         printItem.left,
         printItem.width,
         printItem.height,
-        printItem.style.codeType,
+        lodopStyle.codeType,
         printItem.value
       )
       break
     case 'braid-html':
       {
         let html = htmlTempTohtml(printItem.defaultValue as string, printItem.style)
-        if (printItem.style && printItem.style.AutoHeight) {
+        if (lodopStyle.AutoHeight) {
           LODOP.ADD_PRINT_HTM(
             printItem.top,
             printItem.left,
             printItem.width,
-            'BottomMargin:' + printItem.style.BottomMargin + 'mm',
+            'BottomMargin:' + lodopStyle.BottomMargin + 'mm',
             html
           )
         } else {
@@ -221,12 +228,12 @@ function _AddPrintItem(LODOP:LODOPType, printItem:TempItem, pageIndex = 0) {
     case 'braid-table':
       {
         let html = tableTempTohtml(printItem.columns?printItem.columns:[], printItem.defaultValue as any[], printItem.style)
-        if (printItem.style && printItem.style.AutoHeight) {
+        if (lodopStyle.AutoHeight) {
           LODOP.ADD_PRINT_TABLE(
             printItem.top,
             printItem.left,
             printItem.width,
-            'BottomMargin:' + printItem.style.BottomMargin + 'mm',
+            'BottomMargin:' + lodopStyle.BottomMargin + 'mm',
             html
           )
         } else {
@@ -256,9 +263,30 @@ function _AddPrintItem(LODOP:LODOPType, printItem:TempItem, pageIndex = 0) {
     default: ''
   }
   // 设置打印项样式
-  if (printItem.style) {
-    Object.keys(printItem.style).forEach(key => {
-      LODOP.SET_PRINT_STYLEA(0, key, printItem.style[key])
-    })
+  Object.keys(lodopStyle).forEach(key => {
+    LODOP.SET_PRINT_STYLEA(0, key, lodopStyle[key])
+  })
+}
+
+/**
+ * 将模板设计样式转换为lodop样式
+ * @param style 模板样式
+ * @returns lodop样式对象
+ */
+function createLodopStyle(style:TempItemStyle):LodopItemStyle{
+  let lodopStyle = {
+    zIndex: style.zIndex
   }
+
+  for(let key in style){
+    if(['Bold','Italic','Underline','ShowBarText'].indexOf(key) >-1){
+      lodopStyle[key] = style[key] ? 1 :0
+    }else if(key === 'Alignment'){
+      lodopStyle[key] = style[key]=='left' ? 1 :style[key]=='center'?2:3
+    }else{
+      lodopStyle[key] = style[key]
+    }
+  }
+  
+  return lodopStyle
 }
