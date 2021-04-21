@@ -165,11 +165,9 @@
 </template>
 
 <script>
-import vptd from '../../mixins/vptd'
 import { getCodeTypeArray, getItemTypeArray } from '../../libs/props.js'
 
 export default {
-  mixins: [vptd],
   data() {
     return {
       codeTypeArray: getCodeTypeArray(),

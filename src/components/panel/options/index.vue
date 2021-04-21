@@ -28,17 +28,8 @@
 </template>
 
 <script>
-//
-import vptd from '../../../mixins/vptd'
-import { cumulativeOffset, checkInView } from '../../../utils/offset'
-import { getDefaultProps } from '../../../libs/props'
-import TxtOption from './option-item/txt-option.vue'
-import ImageOption from './option-item/image-option.vue'
-import HtmlOption from './option-item/html-option.vue'
-
 export default {
   // components: { TxtOption, ImageOption, HtmlOption },
-  mixins: [vptd],
   data() {
     return {}
   },

@@ -29,11 +29,9 @@
 //   name: 'buyerPhone'
 // }
 
-import vptd from '../../../mixins/vptd'
 const WIDGET_NAME = 'braid-txt'
 
 export default {
-  mixins: [vptd],
   name: WIDGET_NAME,
   setting: {
     type: WIDGET_NAME,

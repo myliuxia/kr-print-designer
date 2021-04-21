@@ -33,14 +33,13 @@
 <script>
 import control from './size-control.vue'
 import move from '../../mixins/move'
-import vptd from '../../mixins/vptd'
 
 export default {
   components: {
     control, // 尺寸控制
   },
 
-  mixins: [move, vptd],
+  mixins: [move],
 
   data() {
     return {}

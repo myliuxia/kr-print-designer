@@ -13,11 +13,9 @@
 </template>
 
 <script>
-import vptd from '../../mixins/vptd'
 import { cumulativeOffset, checkInView } from '../../utils/offset'
 
 export default {
-  mixins: [vptd],
   data() {
     return {
       sysLayer: [{}],

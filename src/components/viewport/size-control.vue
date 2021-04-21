@@ -55,9 +55,7 @@
 </template>
 
 <script>
-import vptd from '../../mixins/vptd'
 export default {
-  mixins: [vptd],
   data() {
     return {
       type: '', // 调整方向 left | right | up | down

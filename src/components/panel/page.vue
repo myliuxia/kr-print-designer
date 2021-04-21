@@ -55,9 +55,7 @@
 </template>
 
 <script>
-import vptd from '../../mixins/vptd'
 export default {
-  mixins: [vptd],
   computed: {
     pageInfo() {
       return this.$vptd.state.page
