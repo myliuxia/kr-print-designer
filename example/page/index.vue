@@ -27,7 +27,13 @@
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="handleEdit(scope.$index, scope.row)">设计</el-button>
             <el-button type="text" size="mini" @click="handlePreview(scope.$index, scope.row)">预览</el-button>
-            <el-button type="text" size="mini" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button type="text" size="mini" @click="handleCopy(scope.row)">复制新增</el-button>
+            <el-button
+              v-if="!scope.row.default"
+              type="text"
+              size="mini"
+              @click="handleDelete(scope.$index, scope.row)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -190,6 +196,14 @@ export default {
         })
         .catch()
     },
+    handleCopy(row) {
+      let copyTemp = JSON.parse(JSON.stringify(row))
+      copyTemp.title = copyTemp.title + '_copy'
+      copyTemp.default = false
+      this.tempList.push(copyTemp)
+      localStorage.setItem('tempList', JSON.stringify(this.tempList))
+    },
+
     // 新增
     openCreate() {
       this.form = defaultTemp()

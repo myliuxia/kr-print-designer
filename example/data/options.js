@@ -1,5 +1,6 @@
-
-
+/**
+ * 出库单 模板设计选项
+ */
 export const OutStockOptions = [
   {
     type: 'braid-txt',
@@ -150,7 +151,7 @@ export const OutStockOptions = [
         skuName: 'iphone11pro124g',
         specModel: '165L',
         quantity: 3,
-        snCode: '[SPP1Y79G1]',
+        snCode: ' [SPP1Y79G1]',
         price: '12.00'
       }
 
@@ -184,14 +185,22 @@ export const OutStockOptions = [
       },
       {
         title: '产品序列号',
-        value: '{产品序列号}',
+        value: '产品序列号明细：<br>{产品序列号}',
         name: 'snCode',
+        trSet: {
+          title: '产品序列号明细:',
+          col: 5,
+          margin: '50px'
+        },
       }
     ],
     columns: []
   }
 ]
 
+/**
+ * 入库单 模板设计选项
+ */
 export const InStockOptions = [
   {
     type: 'braid-txt',
@@ -319,7 +328,7 @@ export const InStockOptions = [
         skuName: 'iphone11pro124g',
         specModel: '165L',
         quantity: 3,
-        snCode: '[SPP1Y79G1]',
+        snCode: '[SPP1Y79G1] ',
         price: '12.00'
       }
 
