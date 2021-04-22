@@ -2,7 +2,7 @@
 
 ## 简介
 
-一个基于 Vue、ElementUi、C-Lodop 的打印模板设计器。实现打印模板的设计、预览和打印功能。[示例](http://192.168.7.229:9090/#/)
+一个基于 Vue、ElementUi、C-Lodop 的打印模板设计器。实现打印模板的设计、预览和打印功能。[示例](https://myliuxia.github.io/demo/kr-print-designer/index.html)
 
 ## 安装
 
