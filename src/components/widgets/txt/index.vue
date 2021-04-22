@@ -52,7 +52,7 @@ export const setting: TempItem = {
     Bold: false, // 1代表粗体，0代表非粗体
     Italic: false, // 1代表斜体，0代表非斜体
     Underline: false, // 1代表有下划线，0代表无下划线
-    Alignment: 'left', // 对齐方式 1--左靠齐 2--居中 3--右靠齐
+    Alignment: 'left', // 对齐方式
     ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
   },
 }

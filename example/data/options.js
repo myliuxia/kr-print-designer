@@ -143,7 +143,6 @@ export const OutStockOptions = [
         specModel: '165L',
         quantity: 3,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '23.00'
       },
       {
@@ -152,7 +151,6 @@ export const OutStockOptions = [
         specModel: '165L',
         quantity: 3,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '12.00'
       }
 
@@ -314,7 +312,6 @@ export const InStockOptions = [
         specModel: '165L',
         quantity: 3,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '12.00'
       },
       {
@@ -323,7 +320,6 @@ export const InStockOptions = [
         specModel: '165L',
         quantity: 3,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '12.00'
       }
 

@@ -147,7 +147,7 @@ export const setting: TempItem = {
   name: '',
   style: {
     zIndex: 0,
-    Alignment: 'left', // 对齐方式 1--左靠齐 2--居中 3--右靠齐
+    Alignment: 'left', // 对齐方式
     FontSize: 9,
     FontColor: '#000000',
     BorderColor: '#000000',

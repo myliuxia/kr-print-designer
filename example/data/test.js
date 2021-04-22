@@ -22,7 +22,6 @@ export const OutStockData = [
         specModel: '165L',
         quantity: 17,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '8999.00'
       },
       {
@@ -30,8 +29,7 @@ export const OutStockData = [
         skuName: 'iphone11pro256g',
         specModel: '165L',
         quantity: 9,
-        snCode: '',
-        isUseSn: '0',
+        snCode: '[SPP1Y79G1]',
         price: '23.00'
       },
       {
@@ -40,7 +38,6 @@ export const OutStockData = [
         specModel: '165L',
         quantity: 13,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '7099.00'
       }
     ]
@@ -66,7 +63,6 @@ export const InStockData = [
         specModel: '165L',
         quantity: 3,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '12.00'
       },
       {
@@ -75,7 +71,6 @@ export const InStockData = [
         specModel: '165L',
         quantity: 3,
         snCode: '[SPP1Y79G1]',
-        isUseSn: '1',
         price: '12.00'
       }]
   }
