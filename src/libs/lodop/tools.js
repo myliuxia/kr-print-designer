@@ -25,25 +25,18 @@ export const tempToPrint = (temp, data) => {
 export const tableTempTohtml = (columns, data, style) => {
 
   // 表格全局样式
-  let styleStr = 'text-align:' + (style.Alignment == 1 ? 'left' : style.Alignment == 2 ? 'center' : 'right') + ';'
+  let styleStr = 'text-align:' + style.Alignment + ';'
   styleStr += 'font-size:' + style.FontSize + 'pt;'
   styleStr += 'color:' + style.FontColor + ';'
-
-  // 剔除 type='row' 的数据
-  let cols = columns.filter(item => item.type != 'row')
-  // 获得 type='row' 的数据
-  let rows = columns.filter(item => item.type == 'row')
-  // 剔除 type='row' 和 name = '_seq' 的数据
-  let conCols = columns.filter(item => item.type != 'row' && item.name != '_seq')
 
 
   let html = '<style> table td,table th {word-break: break-all;box-sizing:border-box;border:1px solid ' + style.BorderColor + '}</style>'
   html += '<table border=1 width=\'100%\' cellspacing=\'0\' frame="box" cellpadding=\'2\' style=\'border-collapse:collapse;' + styleStr + '\' bordercolor=\'' + style.BorderColor + '\'>'
   // 解析表头
   html += '<thead><tr>'
-  cols.forEach(column => {
+  columns.forEach(column => {
 
-    if (column.name === '_seq') {
+    if (column.name === '_seq') { // 序号列
       html += '<th width="30">'
     } else {
       html += '<th>'
@@ -57,13 +50,11 @@ export const tableTempTohtml = (columns, data, style) => {
   // 解析内容
   if (Array.isArray(data)) {
     data.forEach((item, idx) => {
-      // 需要显示的row 
-      let showRows = rows.filter(row => item[row.isShowName] == row.isShowValue)
 
       html += '<tr>'
-      cols.forEach(column => {
+      columns.forEach(column => {
         if (column.name === '_seq') {
-          html += '<td rowspan=' + (1 + showRows.length) + '>'
+          html += '<td>'
           html += (idx + 1)
         } else {
           html += '<td>'
@@ -72,38 +63,6 @@ export const tableTempTohtml = (columns, data, style) => {
         html += '</td>'
       })
       html += '</tr>'
-
-      showRows.forEach(row => {
-        // 处理序列号分页问题
-        /**
-         * 因为lodop add_print_tabel每页至少打印一个TR行(由于table可以嵌套多层子table，这里的TR行是指首层TR)
-         * 所以需要将多个序列号分为多个 tr 展示，以解决自动分页时单个tr高度过高时打印错乱问题
-         */
-        let trArr = item[row.name].split(' ')
-        // 第一行显示标题
-        html += '<tr><td colspan=' + conCols.length + ' style="border:none">'
-        html += row.trSet.title
-        html += '</td></tr>'
-        // 之后展示内容
-        html += '<tr><td colspan=' + conCols.length + ' style="border:none">'
-        // 一列序列号所占的宽度
-        let colWidth = (100 / row.trSet.col) + '%'
-
-        trArr.forEach((item, index) => {
-          html += '<span style="display:inline-block;text-align:center;width:' + colWidth + '">' + item + '</span>'
-          if (index % row.trSet.col == row.trSet.col - 1 && trArr.length > index + 1) {
-            html += '</td></tr>'
-            html += '<tr><td colspan=' + conCols.length + ' style="border:none">'
-          }
-        })
-        html += '</td></tr>'
-
-        // html += '<tr><td colspan=' + conCols.length + '>'
-        // html += strTempToValue(row.value, item[row.name])
-        // html += '</td></tr>'
-
-      })
-
     })
   }
 
@@ -134,12 +93,12 @@ export const strTempToValue = (str, value) => {
 }
 export const htmlTempTohtml = (val, style) => {
   // 表格全局样式
-  let styleStr = 'text-align:' + (style.Alignment == 1 ? 'left' : style.Alignment == 2 ? 'center' : 'right') + ';'
+  let styleStr = 'text-align:' + style.Alignment + ';'
   styleStr += 'font-size:' + style.FontSize + 'pt;'
   styleStr += 'color:' + style.FontColor + ';'
   let html = '<span style=\'' + styleStr + '\'>'
   html += val
   html += '</span>'
-  console.log(html)
+  // console.log(html)
   return html
 }

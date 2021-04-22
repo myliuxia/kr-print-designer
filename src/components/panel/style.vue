@@ -64,8 +64,8 @@
             <el-switch
               :disabled="activeElement.style.Bold===undefined"
               v-model="activeElement.style.Bold"
-              :active-value="1"
-              :inactive-value="0"
+              :active-value="true"
+              :inactive-value="false"
             ></el-switch>
           </el-form-item>
         </el-col>
@@ -92,8 +92,8 @@
             <el-switch
               :disabled="activeElement.style.ShowBarText===undefined"
               v-model="activeElement.style.ShowBarText"
-              :active-value="1"
-              :inactive-value="0"
+              :active-value="true"
+              :inactive-value="false"
             ></el-switch>
           </el-form-item>
         </el-col>
@@ -104,9 +104,9 @@
             :disabled="activeElement.style.Alignment===undefined"
             v-model="activeElement.style.Alignment"
           >
-            <el-radio-button :label="1">左对齐</el-radio-button>
-            <el-radio-button :label="2">居中</el-radio-button>
-            <el-radio-button :label="3">右对齐</el-radio-button>
+            <el-radio-button :label="'left'">左对齐</el-radio-button>
+            <el-radio-button :label="'center'">居中</el-radio-button>
+            <el-radio-button :label="'right'">右对齐</el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-row>
@@ -143,8 +143,8 @@
             <el-switch
               :disabled="activeElement.style.AutoHeight===undefined"
               v-model="activeElement.style.AutoHeight"
-              :active-value="1"
-              :inactive-value="0"
+              :active-value="true"
+              :inactive-value="false"
             ></el-switch>
           </el-form-item>
         </el-col>
@@ -163,7 +163,6 @@
     </el-form>
   </div>
 </template>
-
 <script>
 import { getCodeTypeArray, getItemTypeArray } from '../../libs/props.js'
 

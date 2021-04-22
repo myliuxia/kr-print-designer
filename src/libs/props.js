@@ -1,10 +1,11 @@
 
 export const getDefaultProps = () => ({
+  uuid: '',
   type: 'braid-txt',
   name: '',
-  isEdit: 1,
-  dragable: 1, // 是否可拖拽
-  resizable: 1, // 尺寸是否可变
+  isEdit: true,
+  dragable: true, // 是否可拖拽
+  resizable: true, // 尺寸是否可变
   width: 120,
   height: 40,
   left: 50,
@@ -12,7 +13,7 @@ export const getDefaultProps = () => ({
   value: '自定义文本',
   title: '自定义文本',
   defaultValue: '自定义文本',
-  style: {}
+  style: { zIndex: 1 }
 })
 // export const styleMap = {
 //   'braid-txt': {

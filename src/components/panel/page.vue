@@ -61,27 +61,6 @@ export default {
       return this.$vptd.state.page
     },
   },
-  methods: {
-    // 自定义上传事件
-    httpRequestMethod(param) {
-      const formData = new FormData()
-      formData.append('file', param.file)
-      this.handleUploadFile(formData)
-    },
-    // 上传图片
-    async handleUploadFile(formData) {
-      // let [data, err] = await svc.uploadImgPrintTemp(formData)
-      // if (err) {
-      //   err.showAlert()
-      //   return
-      // }
-      // this.pageInfo.imageUrl = data
-    },
-    // 删除图片
-    deleteImg() {
-      this.pageInfo.imageUrl = ''
-    },
-  },
 }
 </script>
 

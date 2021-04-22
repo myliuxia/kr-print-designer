@@ -1,11 +1,11 @@
 
 import { getDefaultProps } from '../libs/props.js'
+import widgets from '@/components/widgets/index'
 export default {
   zoom: 100, // 画布缩放百分比
   type: 'page', // 选中元素类型
   index: -1, // 选中元素索引
-  uuid: null, // 选中元素uuid
-  counter: 0, // 容器副本命名时避免重名所用的计数器
+  uuid: -1, // 选中元素uuid
 
   originX: 0, // 选中元件的横向初始值
   originY: 0, // 选中元件的纵向初始值
@@ -30,5 +30,5 @@ export default {
   tempId: '', // 模板Id
   loading: false, // 是否正在初始化中
 
-  widgetSetting: {}, // 模板组件默认属性
+  widgetSetting: widgets.getWidgetsSetting(), // 模板组件默认属性
 }

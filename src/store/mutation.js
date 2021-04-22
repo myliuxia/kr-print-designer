@@ -39,15 +39,17 @@ export default {
   },
 
   // 选中元件与取消选中
-  select(state, payload) {
-    state.uuid = payload.uuid
-    if (payload.uuid === -1) {
+  select(state, temp) {
+    state.uuid = temp.uuid
+    if (temp.uuid === -1) {
       state.activeElement = getDefaultProps()
       state.type = 'page'
     } else {
-      let widget = state.page.tempItems.find(w => w.uuid === payload.uuid)
-      state.activeElement = widget
-      state.type = widget.type
+      let widget = state.page.tempItems.find(w => w.uuid === temp.uuid)
+      if (widget) {
+        state.activeElement = widget
+        state.type = widget.type
+      }
     }
   },
 
@@ -57,10 +59,10 @@ export default {
   },
 
   // 移动元件
-  move(state, payload) {
+  move(state, track) {
     var target = state.activeElement
-    var dx = payload.x - state.startX
-    var dy = payload.y - state.startY
+    var dx = track.x - state.startX
+    var dy = track.y - state.startY
     var left = state.originX + Math.floor(dx * 100 / state.zoom)
     var top = state.originY + Math.floor(dy * 100 / state.zoom)
 
@@ -69,24 +71,24 @@ export default {
   },
 
   // 调整元件尺寸
-  resize(state, payload) {
-    var dx = payload.x - state.startX
-    var dy = payload.y - state.startY
+  resize(state, track) {
+    var dx = track.x - state.startX
+    var dy = track.y - state.startY
     var value
 
-    if (payload.type === 'right') {
+    if (track.type === 'right') {
       value = state.originX + Math.floor(dx * 100 / state.zoom)
       state.activeElement.width = value > 10 ? value : 10
       return
     }
 
-    if (payload.type === 'down') {
+    if (track.type === 'down') {
       value = state.originX + Math.floor(dy * 100 / state.zoom)
       state.activeElement.height = value > 10 ? value : 10
       return
     }
 
-    if (payload.type === 'left') {
+    if (track.type === 'left') {
       var left = state.originX + Math.floor(dx * 100 / state.zoom)
       var width = state.originY - Math.floor(dx * 100 / state.zoom)
       state.activeElement.left = left > 0 ? left : 0
@@ -94,7 +96,7 @@ export default {
       return
     }
 
-    if (payload.type === 'up') {
+    if (track.type === 'up') {
       var top = state.originX + Math.floor(dy * 100 / state.zoom)
       var height = state.originY - Math.floor(dy * 100 / state.zoom)
       state.activeElement.top = top > 0 ? top : 0
@@ -132,43 +134,19 @@ export default {
   },
 
   // 添加组件
-  addTempItem(state, { data: data = null, item }) {
+  addTempItem(state, item) {
     let def = { uuid: generate('1234567890abcdef', 10) }
     let setting = JSON.parse(JSON.stringify(item))
 
-    if (data) {
-      data.forEach(function (val) {
-        state.page.tempItems.push(Object.assign(setting, val, def))
-      })
-    } else {
-      state.page.tempItems.push(Object.assign(setting, def))
-    }
+    state.page.tempItems.push(Object.assign(setting, def))
   },
 
-  // 替换图片
-  replaceImage(state, payload) {
-    state.activeElement.width = payload[0].width
-    state.activeElement.url = payload[0].url
-  },
 
-  // 添加容器背景图
-  addContainerBackPic(state, payload) {
-    state.activeElement.backPic = payload[0].url
-    state.activeElement.backPicUrl = payload[0].src
-    state.activeElement.width = payload[0].width
-    state.activeElement.height = payload[0].height
-  },
-
-  // 添加背景图
-  addBackPic(state, payload) {
-    state.activeElement.backPic = payload[0].url
-    state.activeElement.backPicUrl = payload[0].src
-  },
 
   // 更新数据
-  updateData(state, { uuid, key, value }) {
+  updateData(state, { uuid, value }) {
     let widget = state.page.tempItems.find(w => w.uuid === uuid)
-    widget[key] = value
+    widget ? widget.value = value : ''
   },
 
   // 设置模板Id

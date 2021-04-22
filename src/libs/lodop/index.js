@@ -28,17 +28,17 @@ function print(temp, data) {
   let LODOP = _CreateLodop(temp.title, temp.width, temp.height, temp.pageWidth, temp.pageHeight)
   let tempItems = cloneDeep(temp.tempItems)
   let printContent = _TempParser(tempItems, data)
-  if (data.printContent > 1) {
+  if (printContent.length > 1) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
       LODOP.NewPageA()
-      aPrint.forEach(printItem => {
+      aPrint.forEach((printItem) => {
         _AddPrintItem(LODOP, printItem, index)
       })
     })
   } else {
     // 单份
-    printContent[0].forEach(printItem => {
+    printContent[0].forEach((printItem) => {
       _AddPrintItem(LODOP, printItem)
     })
   }
@@ -60,13 +60,13 @@ function preview(temp, data) {
     // 打印多份
     printContent.forEach((aPrint, index) => {
       LODOP.NewPageA()
-      aPrint.forEach(printItem => {
+      aPrint.forEach((printItem) => {
         _AddPrintItem(LODOP, printItem, index)
       })
     })
   } else {
     // 单份
-    printContent[0].forEach(printItem => {
+    printContent[0].forEach((printItem) => {
       _AddPrintItem(LODOP, printItem)
     })
   }
@@ -104,7 +104,7 @@ function previewTemp(temp) {
 function _CreateLodop(pageName, width, height, pageWidth = 0, pageHeight = 0, top = 0, left = 0) {
   let LODOP = getLodop()
 
-  console.log(strCompanyName, strLicense, strLicenseA, strLicenseB)
+  // console.log(strCompanyName, strLicense, strLicenseA, strLicenseB)
 
   // 设置软件产品注册信息
   LODOP.SET_LICENSES(strCompanyName, strLicense, strLicenseA, strLicenseB)
@@ -125,14 +125,14 @@ function _TempParser(tempItem, data) {
   let temp = cloneDeep(tempItem)
   //修改模板答应项顺序
   //将自适应高度的打印项（item.style.AutoHeight == 1）放在第一项
-  let flag = temp.findIndex(item => item.style.AutoHeight == 1)
+  let flag = temp.findIndex(item => item.style.AutoHeight)
   if (flag != -1) {
     let autoItem = temp[flag]
     temp.splice(flag, 1)
     temp.unshift(autoItem)
     // 处理位于自适应打印项下方的打印项
     temp.forEach(item => {
-      // 位于自适应大项下的打印项修改top、left,并添加关联属性（style.LinkedItem）
+      // 位于自适应高度项下的打印项修改top、left,并添加关联属性（style.LinkedItem）
       if (item.top > autoItem.top && item.style.ItemType == 0) {
         item.top = item.top - autoItem.top - autoItem.height
         item.left = item.left - autoItem.left
@@ -149,7 +149,7 @@ function _TempParser(tempItem, data) {
         let item = cloneDeep(tempItem)
         if (item.name) {
           item.defaultValue = dataItem[item.name]
-          item.value = strTempToValue(item.value, item.defaultValue || '')
+          item.value = strTempToValue(item.value, item.defaultValue)
         }
         return item
       })
@@ -168,10 +168,14 @@ function _TempParser(tempItem, data) {
  * @param {Object} printItem 打印项内容
  * @param {Number} pageIndex 当前打印页的开始序号
  */
-function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
+function _AddPrintItem(LODOP, tempItem, pageIndex = 0) {
+  let printItem = cloneDeep(tempItem)
+  // TempItemStyle转换为LodopItemStyle
+  let lodopStyle = _createLodopStyle(printItem.style)
+
   // 批量打印时，修改关联打印项的关联序号
-  if (printItem.style && printItem.style.LinkedItem == 1) {
-    printItem.style.LinkedItem = 1 + pageIndex
+  if (lodopStyle.LinkedItem == 1) {
+    lodopStyle.LinkedItem = 1 + pageIndex
   }
   // 添加打印项
   switch (printItem.type) {
@@ -190,19 +194,19 @@ function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
         printItem.left,
         printItem.width,
         printItem.height,
-        printItem.style.codeType,
+        lodopStyle.codeType,
         printItem.value
       )
       break
     case 'braid-html':
       {
         let html = htmlTempTohtml(printItem.defaultValue, printItem.style)
-        if (printItem.style && printItem.style.AutoHeight == 1) {
+        if (lodopStyle.AutoHeight) {
           LODOP.ADD_PRINT_HTM(
             printItem.top,
             printItem.left,
             printItem.width,
-            'BottomMargin:' + printItem.style.BottomMargin + 'mm',
+            'BottomMargin:' + lodopStyle.BottomMargin + 'mm',
             html
           )
         } else {
@@ -219,13 +223,13 @@ function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
       break
     case 'braid-table':
       {
-        let html = tableTempTohtml(printItem.columns, printItem.defaultValue, printItem.style)
-        if (printItem.style && printItem.style.AutoHeight == 1) {
+        let html = tableTempTohtml(printItem.columns ? printItem.columns : [], printItem.defaultValue, printItem.style)
+        if (lodopStyle.AutoHeight) {
           LODOP.ADD_PRINT_TABLE(
             printItem.top,
             printItem.left,
             printItem.width,
-            'BottomMargin:' + printItem.style.BottomMargin + 'mm',
+            'BottomMargin:' + lodopStyle.BottomMargin + 'mm',
             html
           )
         } else {
@@ -255,9 +259,30 @@ function _AddPrintItem(LODOP, printItem, pageIndex = 0) {
     default: ''
   }
   // 设置打印项样式
-  if (printItem.style) {
-    Object.keys(printItem.style).forEach(key => {
-      LODOP.SET_PRINT_STYLEA(0, key, printItem.style[key])
-    })
+  Object.keys(lodopStyle).forEach(key => {
+    LODOP.SET_PRINT_STYLEA(0, key, lodopStyle[key])
+  })
+}
+
+/**
+ * 将模板设计样式转换为lodop样式
+ * @param style 模板样式
+ * @returns lodop样式对象
+ */
+function _createLodopStyle(style) {
+  let lodopStyle = {
+    zIndex: style.zIndex
   }
+
+  for (let key in style) {
+    if (['Bold', 'Italic', 'Underline', 'ShowBarText'].indexOf(key) > -1) {
+      lodopStyle[key] = style[key] ? 1 : 0
+    } else if (key === 'Alignment') {
+      lodopStyle[key] = style[key] == 'left' ? 1 : style[key] == 'center' ? 2 : 3
+    } else {
+      lodopStyle[key] = style[key]
+    }
+  }
+
+  return lodopStyle
 }

@@ -7,9 +7,11 @@ import './assets/style/index.scss'
 import './libs/lodop/LodopFuncs.js'
 import lodop from './libs/lodop/index.js'
 import vptd from './store/index'
+import widgets from '@/components/widgets/index'
 
 const install = function (Vue, opts = {}) {
   Vue.use(ElementUI);
+  Vue.use(widgets);
   Vue.component('kr-print-designer', KrPrintDesigner)
   Vue.prototype.$lodop = lodop
   Vue.prototype.$vptd = vptd

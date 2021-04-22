@@ -1,12 +1,15 @@
 <template>
   <div class="options-box">
     <template v-for="(item,index) in optionItems">
-      <!-- <txt-option v-if="item.type == 'braid-txt' && item.dynamic" :item="item" :key="index"></txt-option>
-      <image-option v-else-if="item.type == 'braid-image'" :item="item" :key="index"></image-option>
-      <image-option v-else-if="item.type == 'braid-html'" :item="item" :key="index"></image-option>-->
-      <el-popover v-if="item.type == 'braid-table'" :key="index" placement="top" width="200">
+      <el-popover
+        v-if="item.type == 'braid-table'"
+        :key="index"
+        placement="top"
+        width="200"
+        v-model="tablePopover"
+      >
         <div>
-          <el-checkbox-group v-model="item.columns">
+          <el-checkbox-group v-model="item.selectCol">
             <el-row>
               <el-col v-for="col in item.columnsAttr" :key="col.name" :span="12">
                 <el-checkbox :label="col.name">{{col.title}}</el-checkbox>
@@ -29,33 +32,15 @@
 
 <script>
 export default {
-  // components: { TxtOption, ImageOption, HtmlOption },
   data() {
-    return {}
+    return {
+      tablePopover: false,
+    }
   },
   computed: {
     optionItems() {
       return this.$vptd.state.optionItems
     },
-    // 系统打印项
-    systemLayers() {
-      let widget = this.$vptd.state.widgetSetting
-      return [
-        { ...widget['braid-txt'], title: '静态文本', value: '静态文本', dynamic: false },
-        { ...widget['braid-txt'], title: '动态文本', dynamic: true },
-
-        { ...widget['braid-image'], title: '静态图片', dynamic: false },
-        { ...widget['braid-image'], title: '动态图片', dynamic: true },
-
-        { ...widget['braid-html'], title: '静态html', dynamic: false },
-        { ...widget['braid-html'], title: '动态html', dynamic: true },
-
-        { ...widget['braid-tabel'], title: '表格', dynamic: true },
-      ]
-    },
-  },
-  mounted() {
-    // console.log(this.systemLayers)
   },
   methods: {
     // 添加组件
@@ -63,16 +48,15 @@ export default {
       switch (item.type) {
         case 'braid-table': {
           let selectCol = []
-          item.columns.forEach((col) => {
-            for (let colAttr of item.columnsAttr) {
-              if (colAttr.name == col) {
-                selectCol.push(colAttr)
-                break
-              }
+          item.selectCol.forEach((itemName) => {
+            let colInfo = item.columnsAttr.find((col) => col.name === itemName)
+            if (colInfo) {
+              selectCol.push(colInfo)
             }
           })
           item.columns = selectCol //表格显示的字段
           this.$vptd.dispatch('addTempItem', item)
+          this.tablePopover = false
           break
         }
         default:

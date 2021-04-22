@@ -16,11 +16,6 @@
 import { cumulativeOffset, checkInView } from '../../utils/offset'
 
 export default {
-  data() {
-    return {
-      sysLayer: [{}],
-    }
-  },
   computed: {
     // 已添加的组件
     layers() {
@@ -36,9 +31,13 @@ export default {
         uuid: item.uuid,
       })
       let viewport = document.querySelector('#viewport')
-      let target = viewport.querySelector(`[data-uuid='${item.uuid}']`)
-      if (target && !checkInView(target)) {
-        viewport.scrollTop = cumulativeOffset(target).top - 50
+      if (viewport) {
+        let target = viewport.querySelector(`[data-uuid='${item.uuid}']`)
+        if (target && !checkInView(target)) {
+          viewport.scrollTop = cumulativeOffset(target).top - 50
+        }
+      } else {
+        console.error('未找到 "#viewport" 的节点')
       }
     },
 

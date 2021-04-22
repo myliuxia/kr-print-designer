@@ -67,7 +67,12 @@ export default {
 
   mounted() {
     // 采用事件代理的方式监听元件的选中操作
-    document.getElementById('viewport').addEventListener('mousedown', this.handleSelection, false)
+    let viewportDom = document.getElementById('viewport')
+    if (viewportDom) {
+      viewportDom.addEventListener('mousedown', this.handleSelection, false)
+    } else {
+      console.error('未找的‘viewport’节点')
+    }
 
     // 绑定键盘上下左右键用于元件的移动
     document.addEventListener(

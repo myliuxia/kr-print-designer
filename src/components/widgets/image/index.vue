@@ -24,7 +24,6 @@ export default {
     isEdit: false,
     dragable: true, // 是否可拖拽
     resizable: true, // 尺寸是否可变
-    dynamic: true, // 是否为动态内容
     width: 120,
     height: 40,
     left: 50,

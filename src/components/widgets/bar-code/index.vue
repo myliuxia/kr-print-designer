@@ -42,7 +42,7 @@ export default {
     style: {
       zIndex: 0,
       FontSize: 9,
-      ShowBarText: 0, // 条码是否显示值 0--不显示 1--显示
+      ShowBarText: false, // 条码是否显示值 0--不显示 1--显示
       codeType: 'Code39', // 条码类型
       ItemType: 0, // 打印类型 0--普通项 1--页眉页脚 2--页号项 3--页数项 4--多页项
     },

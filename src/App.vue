@@ -16,8 +16,6 @@
 <script>
 import Viewport from './components/viewport/index.vue'
 import Panel from './components/panel/index.vue'
-import Vue from 'vue'
-import widgets from './components/widgets'
 import cloneDeep from 'lodash/cloneDeep'
 
 export default {
@@ -26,10 +24,7 @@ export default {
   props: {
     widgetOptions: {
       type: Array,
-      default: () => [
-        { type: 'braid-txt', title: '静态文本', value: '静态文本', defaultValue: '静态文本' },
-        { type: 'braid-txt', title: '动态文本', value: '', defaultValue: '动态文本', dynamic: true },
-      ],
+      default: () => [],
     },
     tempValue: {
       type: Object,
@@ -37,10 +32,6 @@ export default {
     },
   },
   created() {
-    Vue.use(widgets)
-
-    // 设置模板组件默认属性
-    this.$vptd.commit('setWidgetSetting', widgets.getWidgetsSetting())
     // 初始化设计器
     this.$vptd.dispatch('designerInit', {
       tempValue: cloneDeep(this.tempValue),
