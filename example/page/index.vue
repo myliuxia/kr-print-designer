@@ -128,6 +128,9 @@
   </div>
 </template>
 <script>
+import { Table, TableColumn, Dialog } from 'element-ui'
+import Vue from 'vue'
+
 const defaultTemp = () => ({
   title: '',
   type: 1, // 模板类型 1：出库单；2：入库单
@@ -168,6 +171,9 @@ export default {
     }
   },
   created() {
+    Vue.use(Table)
+    Vue.use(TableColumn)
+    Vue.use(Dialog)
     this.tempList = JSON.parse(localStorage.getItem('tempList')) || []
   },
 
