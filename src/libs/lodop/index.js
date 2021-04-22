@@ -124,7 +124,7 @@ function _CreateLodop(pageName, width, height, pageWidth = 0, pageHeight = 0, to
 function _TempParser(tempItem, data) {
   let temp = cloneDeep(tempItem)
   //修改模板答应项顺序
-  //将自适应高度的打印项（item.style.AutoHeight == 1）放在第一项
+  //将自适应高度的打印项（item.style.AutoHeight == true）放在第一项
   let flag = temp.findIndex(item => item.style.AutoHeight)
   if (flag != -1) {
     let autoItem = temp[flag]

@@ -14,7 +14,7 @@
     <div
       class="text"
       :style="{
-        display:val.style.ShowBarText== 1 ? '' : 'none',
+        display:val.style.ShowBarText ? '' : 'none',
         fontSize: val.style.FontSize + 'pt',
         fontWeight: val.style.Bold ? 'bold' : 'normal'
       }"
