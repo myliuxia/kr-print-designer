@@ -6,6 +6,7 @@ import {
   InputNumber,
   Switch,
   Select,
+  Option,
   RadioGroup,
   Radio,
   Popover,
@@ -33,6 +34,7 @@ const install = function (Vue, opts = {}) {
   Vue.component(InputNumber.name, InputNumber)
   Vue.component(Switch.name, Switch)
   Vue.component(Select.name, Select)
+  Vue.component(Option.name, Option)
   Vue.component(RadioGroup.name, RadioGroup)
   Vue.component(Radio.name, Radio)
   Vue.component(Popover.name, Popover)
