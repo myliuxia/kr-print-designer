@@ -16,6 +16,7 @@ import {
   CollapseItem,
   Form,
   FormItem,
+  Tag,
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/style/index.scss'
@@ -42,6 +43,7 @@ const install = function (Vue, opts = {}) {
   Vue.component(CollapseItem.name, CollapseItem)
   Vue.component(Form.name, Form)
   Vue.component(FormItem.name, FormItem)
+  Vue.component(Tag.name, Tag)
 
   Vue.use(widgets);
   Vue.component('kr-print-designer', KrPrintDesigner)
