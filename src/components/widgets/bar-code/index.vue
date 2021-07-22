@@ -10,7 +10,7 @@
       zIndex: val.zIndex,
     }"
   >
-    <img :src="codeImg" />
+    <img :src="codeUrl" />
     <div
       class="text"
       :style="{
@@ -50,8 +50,20 @@ export default {
   props: ['val'],
   data() {
     return {
-      codeImg: require('../../../assets/image/barCode.png'),
+      // codeImg: require('../../../assets/image/barCode.png'),
     }
+  },
+  computed: {
+    // 'QRCode', 'PDF417'
+    codeUrl() {
+      if (this.val.style.codeType === 'QRCode') {
+        return require('./QRCode.png')
+      } else if (this.val.style.codeType === 'PDF417') {
+        return require('./PDF417.png')
+      } else {
+        return require('./barCode.png')
+      }
+    },
   },
 }
 </script>
