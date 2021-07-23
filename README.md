@@ -121,6 +121,7 @@ tempValue 为打印模板对象， 对象中参数具体解析如下：
     value: "{orderNumber}",
     defaultValue: "1234567890",
     name: "orderNumber"
+    lodopStyle: { QRCodeVersion: '1', QRCodeErrorLevel: 'L' },
   },
   {
     type: "braid-html",
@@ -208,6 +209,7 @@ widgetOptions 为设计打印模板的打印项配置， 打印项有多种类�
 | value        | 打印项内容                                  | String  | ——                                                            | ——     |
 | defaultValue | 打印项默认内容                              | String  | ——                                                            | ——     |
 | name         | 动态打印项数据名称（对应打印数据 key-name） | String  | ——                                                            | ''     |
+| lodopStyle   | LODOP 默认打印项样式                        | Object  | ——                                                            | {}     |
 | style        | 打印项样式                                  | Object  | ——                                                            | {}     |
 
 ##### Style:
@@ -241,6 +243,7 @@ widgetOptions 为设计打印模板的打印项配置， 打印项有多种类�
 | value        | 图片路劲                                    | String  | ——                                                            | ——     |
 | defaultValue | 图片默认路劲                                | String  | ——                                                            | ——     |
 | name         | 动态打印项数据名称（对应打印数据 key-name） | String  | ——                                                            | ''     |
+| lodopStyle   | LODOP 默认打印项样式                        | Object  | ——                                                            | {}     |
 | style        | 打印项样式                                  | Object  | ——                                                            | {}     |
 
 ##### Style:
@@ -268,6 +271,7 @@ widgetOptions 为设计打印模板的打印项配置， 打印项有多种类�
 | value        | html 内容                                   | String  | ——                                                            | "<div>html<div>" |
 | defaultValue | 默认 html                                   | String  | ——                                                            | "<div>html<div>" |
 | name         | 动态打印项数据名称（对应打印数据 key-name） | String  | ——                                                            | ''               |
+| lodopStyle   | LODOP 默认打印项样式                        | Object  | ——                                                            | {}               |
 | style        | 打印项样式                                  | Object  | ——                                                            | {}               |
 
 ##### Style:
@@ -298,6 +302,7 @@ widgetOptions 为设计打印模板的打印项配置， 打印项有多种类�
 | defaultValue | 表格默认数据                                | Array   | ——                                                            | []     |
 | columnsAttr  | 表格可选列配置                              | Array   | ——                                                            | []     |
 | name         | 动态打印项数据名称（对应打印数据 key-name） | String  | ——                                                            | ''     |
+| lodopStyle   | LODOP 默认打印项样式                        | Object  | ——                                                            | {}     |
 | style        | 打印项样式                                  | Object  | ——                                                            | {}     |
 
 ##### Style:
@@ -338,6 +343,7 @@ widgetOptions 为设计打印模板的打印项配置， 打印项有多种类�
 | value        | html 内容                                   | String  | ——                                                            | "1234567890" |
 | defaultValue | 默认 html                                   | String  | ——                                                            | "1234567890" |
 | name         | 动态打印项数据名称（对应打印数据 key-name） | String  | ——                                                            | ''           |
+| lodopStyle   | LODOP 默认打印项样式                        | Object  | ——                                                            | {}           |
 | style        | 打印项样式                                  | Object  | ——                                                            | {}           |
 
 ##### Style:

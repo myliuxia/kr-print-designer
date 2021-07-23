@@ -32,7 +32,8 @@ export const OutStockOptions = [
     title: '单号条码',
     value: '{单号}',
     defaultValue: 'CK-1234567890',
-    name: 'stockoutCode'
+    name: 'stockoutCode',
+    lodopStyle: { QRCodeVersion: '1', QRCodeErrorLevel: 'L' },
   },
   {
     type: 'braid-txt',
