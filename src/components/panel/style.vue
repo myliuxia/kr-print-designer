@@ -104,9 +104,9 @@
             :disabled="activeElement.style.Alignment===undefined"
             v-model="activeElement.style.Alignment"
           >
-            <el-radio-button :label="'left'">左对齐</el-radio-button>
-            <el-radio-button :label="'center'">居中</el-radio-button>
-            <el-radio-button :label="'right'">右对齐</el-radio-button>
+            <el-radio :label="'left'">左对齐</el-radio>
+            <el-radio :label="'center'">居中</el-radio>
+            <el-radio :label="'right'">右对齐</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-row>

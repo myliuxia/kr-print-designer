@@ -11,12 +11,15 @@ import {
   Radio,
   Popover,
   Checkbox,
+  CheckboxGroup,
   Row,
   Col,
   Collapse,
   CollapseItem,
   Form,
   FormItem,
+  Tag,
+  ColorPicker,
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/style/index.scss'
@@ -38,12 +41,16 @@ const install = function (Vue, opts = {}) {
   Vue.component(Radio.name, Radio)
   Vue.component(Popover.name, Popover)
   Vue.component(Checkbox.name, Checkbox)
+  Vue.component(CheckboxGroup.name, CheckboxGroup)
   Vue.component(Row.name, Row)
   Vue.component(Col.name, Col)
   Vue.component(Collapse.name, Collapse)
   Vue.component(CollapseItem.name, CollapseItem)
   Vue.component(Form.name, Form)
   Vue.component(FormItem.name, FormItem)
+  Vue.component(Tag.name, Tag)
+  Vue.component(ColorPicker.name, ColorPicker)
+
 
   Vue.use(widgets);
   Vue.component('kr-print-designer', KrPrintDesigner)

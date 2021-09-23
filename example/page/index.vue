@@ -128,9 +128,9 @@
   </div>
 </template>
 <script>
-import { Table, TableColumn, Dialog } from 'element-ui'
+import { Table, TableColumn, Dialog, MessageBox } from 'element-ui'
 import Vue from 'vue'
-
+Vue.prototype.$confirm = (...args) => MessageBox.confirm(...args)
 const defaultTemp = () => ({
   title: '',
   type: 1, // 模板类型 1：出库单；2：入库单
@@ -238,7 +238,7 @@ export default {
           } catch (err) {
             return this.$message('请输入正确格式的打印数据')
           }
-          if ((flag = 1)) {
+          if (flag == 1) {
             this.$lodop.preview(this.tempList[this.printForm.tempIndex], printData)
           } else {
             this.$confirm('确认直接打印吗？', '确认信息')
@@ -247,7 +247,9 @@ export default {
                   this.$lodop.print(this.tempList[this.printForm.tempIndex], printData)
                 }
               })
-              .catch()
+              .catch((err) => {
+                console.log(err)
+              })
           }
         }
       })

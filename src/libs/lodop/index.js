@@ -262,6 +262,14 @@ function _AddPrintItem(LODOP, tempItem, pageIndex = 0) {
   Object.keys(lodopStyle).forEach(key => {
     LODOP.SET_PRINT_STYLEA(0, key, lodopStyle[key])
   })
+  // 设置默认LodopStyle
+  let defaultLodopStyle = printItem.lodopStyle
+  if (defaultLodopStyle) {
+    Object.keys(defaultLodopStyle).forEach(key => {
+      LODOP.SET_PRINT_STYLEA(0, key, defaultLodopStyle[key])
+    })
+  }
+
 }
 
 /**

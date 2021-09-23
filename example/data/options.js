@@ -27,6 +27,15 @@ export const OutStockOptions = [
     name: 'stockoutCode'
   },
   {
+    type: 'bar-code',
+    isEdit: 1,
+    title: '单号条码',
+    value: '{单号}',
+    defaultValue: 'CK-1234567890',
+    name: 'stockoutCode',
+    lodopStyle: { QRCodeVersion: '1', QRCodeErrorLevel: 'L' },
+  },
+  {
     type: 'braid-txt',
     isEdit: 1,
     title: '客户/供应商',
@@ -225,6 +234,14 @@ export const InStockOptions = [
     value: '{入库单号}',
     defaultValue: 'RK-1234567890',
     name: 'purcheckCode'
+  },
+  {
+    type: 'bar-code',
+    isEdit: 1,
+    title: '单号条码',
+    value: '{单号}',
+    defaultValue: 'RK-1234567890',
+    name: 'stockoutCode'
   },
 
   {
