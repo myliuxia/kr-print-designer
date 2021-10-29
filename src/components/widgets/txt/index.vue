@@ -49,7 +49,7 @@ export default {
     style: {
       zIndex: 0,
       FontSize: 9,
-      FontColor: '#  000000',
+      FontColor: '#000000',
       Bold: false, // 1代表粗体，0代表非粗体
       Italic: false, // 1代表斜体，0代表非斜体
       Underline: false, // 1代表有下划线，0代表无下划线

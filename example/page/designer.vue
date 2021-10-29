@@ -1,5 +1,5 @@
 <template>
-  <kr-print-designer :temp-value="value" :widget-options="widgets" @save="handleSave" />
+  <kr-print-designer ref="printDesigner" :temp-value="value" :widget-options="widgets" @save="handleSave" />
 </template>
 <script>
 import { OutStockOptions, InStockOptions } from '../data/options'
@@ -36,6 +36,10 @@ export default {
       localStorage.setItem('tempList', JSON.stringify(tempList))
       this.$router.back()
     },
+    // 手动初始话模板数据
+    initTemp(){
+      this.$refs.printDesigner.initTemp(this.value,this.widgets)
+    }
   },
 }
 </script>
