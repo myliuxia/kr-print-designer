@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-theme="kr-designer">
     <router-view />
   </div>
 </template>

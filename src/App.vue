@@ -1,5 +1,5 @@
 <template>
-  <div class="kr-designer">
+  <div class="kr-designer" data-theme="kr-designer">
     <viewport class="kr-designer-view" />
     <div class="kr-designer-tool">
       <el-scrollbar class="kr-designer-tool_con">
@@ -32,7 +32,7 @@ export default {
     },
   },
   created() {
-    this.initTemp(this.tempValue,this.widgetOptions)
+    this.initTemp(this.tempValue, this.widgetOptions)
   },
   methods: {
     // 保存模板
@@ -45,14 +45,14 @@ export default {
       let page = { ...this.$vptd.state.page }
       this.$lodop.previewTemp(cloneDeep(page))
     },
-    
+
     // 初始化设计器
-    initTemp(tempValue,widgetOptions){
+    initTemp(tempValue, widgetOptions) {
       this.$vptd.dispatch('designerInit', {
         tempValue: cloneDeep(tempValue),
         options: cloneDeep(widgetOptions),
       })
-    }
+    },
   },
 }
 </script>
