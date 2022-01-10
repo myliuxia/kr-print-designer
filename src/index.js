@@ -21,7 +21,6 @@ import {
   Tag,
   ColorPicker,
 } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 import './assets/style/index.scss'
 // LODOP打印服务
 import './libs/lodop/LodopFuncs.js'
